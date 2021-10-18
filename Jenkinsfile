@@ -2,7 +2,9 @@ pipeline {
     agent any
     stages {
         stage('Info') {
-            sh "mvn -v"
+            steps {
+                sh "mvn -v"
+            }
         }
         
         stage('Compile and Clean') {
