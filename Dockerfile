@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM maven:3.6.0-jdk-11
 MAINTAINER Gabriel Santos
 
 WORKDIR /vvv/www
