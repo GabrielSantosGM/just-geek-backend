@@ -31,12 +31,6 @@ public class AccountController extends Authenticated {
         this.serviceUser = serviceUser;
     }
 
-    @GetMapping("/test")
-    public String teste(){
-
-        return "endpoint de teste do deploy";
-    }
-
     @PostMapping("/register")
     public ResponseEntity<Usuario> registerUser(@RequestBody @Validated UsuarioDTO usuario) {
         try {
