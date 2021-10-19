@@ -33,6 +33,7 @@ public class AccountController extends Authenticated {
 
     @GetMapping("/test")
     public String teste(){
+
         return "endpoint de teste do deploy";
     }
 
