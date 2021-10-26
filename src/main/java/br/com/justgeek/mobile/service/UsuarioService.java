@@ -6,7 +6,7 @@ import br.com.justgeek.mobile.dto.UsuarioDTO;
 
 public interface UsuarioService {
 
-    Usuario cadastrar(UsuarioDTO usuario);
+    Usuario cadastrar(Usuario usuario);
 
     Usuario login(String email, String senha);
 

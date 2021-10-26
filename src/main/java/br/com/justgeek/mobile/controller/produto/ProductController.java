@@ -1,7 +1,8 @@
-package br.com.justgeek.mobile.rest.produto;
+package br.com.justgeek.mobile.controller.produto;
 
 import br.com.justgeek.mobile.configs.Authenticated;
 import br.com.justgeek.mobile.dto.AvaliacaoProdutoDTO;
+import br.com.justgeek.mobile.dto.FreteDTO;
 import br.com.justgeek.mobile.entities.AvaliacaoProduto;
 import br.com.justgeek.mobile.entities.Produto;
 import br.com.justgeek.mobile.dto.ProdutoDTO;
@@ -10,6 +11,7 @@ import br.com.justgeek.mobile.exceptions.ContaException;
 import br.com.justgeek.mobile.exceptions.ProdutoException;
 import br.com.justgeek.mobile.mapper.produto.AvaliacaoProdutoMapper;
 import br.com.justgeek.mobile.repository.UsuarioRepository;
+import br.com.justgeek.mobile.service.impl.frete.FreteServiceImpl;
 import br.com.justgeek.mobile.service.impl.produto.ComprarProdutoServiceImpl;
 import br.com.justgeek.mobile.service.impl.produto.ProdutoServiceImpl;
 import br.com.justgeek.mobile.service.impl.produto.ProdutoFavoritoServiceImpl;
@@ -29,19 +31,21 @@ public class ProductController extends Authenticated {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProductController.class);
 
-    private ProdutoServiceImpl productServices;
-    private ProdutoFavoritoServiceImpl favoriteProductServices;
-    private ComprarProdutoServiceImpl buyProductServices;
+    private final ProdutoServiceImpl productServices;
+    private final ProdutoFavoritoServiceImpl favoriteProductServices;
+    private final ComprarProdutoServiceImpl buyProductServices;
+    private final FreteServiceImpl freteService;
 
     @Autowired
     public ProductController(UsuarioRepository usuarioRepository,
                              ProdutoServiceImpl productServices,
                              ProdutoFavoritoServiceImpl favoriteProductServices,
-                             ComprarProdutoServiceImpl buyProductServices) {
+                             ComprarProdutoServiceImpl buyProductServices, FreteServiceImpl freteService) {
         super(usuarioRepository);
         this.productServices = productServices;
         this.favoriteProductServices = favoriteProductServices;
         this.buyProductServices = buyProductServices;
+        this.freteService = freteService;
     }
 
     @PostMapping("/register/{idRoupa}")
@@ -143,10 +147,10 @@ public class ProductController extends Authenticated {
     }
 
     @PostMapping("/frete/{cep}")
-    public ResponseEntity<Double> shippingValue(@PathVariable String cep) {
+    public ResponseEntity<FreteDTO> shippingValue(@PathVariable String cep) {
         try {
-            LOG.info("[FRETE] Calculando o frete: {}", cep);
-            return ResponseEntity.status(HttpStatus.OK).body(buyProductServices.calcularFrete(cep));
+            LOG.info("BUSCANDO INFORMAÇÕES DOS CORREIOS PARA O CEP: {}", cep);
+            return ResponseEntity.status(HttpStatus.OK).body(freteService.calcularFrete(cep));
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

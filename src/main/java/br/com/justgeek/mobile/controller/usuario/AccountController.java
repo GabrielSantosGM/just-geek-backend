@@ -1,4 +1,4 @@
-package br.com.justgeek.mobile.rest.usuario;
+package br.com.justgeek.mobile.controller.usuario;
 
 import br.com.justgeek.mobile.mapper.LoginUsuarioMapper;
 import br.com.justgeek.mobile.mapper.usuario.PerfilMapper;
@@ -34,7 +34,7 @@ public class AccountController extends Authenticated {
     @PostMapping("/register")
     public ResponseEntity<Usuario> registerUser(@RequestBody @Validated UsuarioDTO usuario) {
         try {
-            serviceUser.cadastrar(usuario);
+            serviceUser.cadastrar(usuario.dtoParaEntidade());
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (ContaException e) {
             LOG.warn(e.getMessage());

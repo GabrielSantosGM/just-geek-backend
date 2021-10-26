@@ -1,4 +1,4 @@
-package br.com.justgeek.mobile.rest.produto;
+package br.com.justgeek.mobile.controller.produto;
 
 import br.com.justgeek.mobile.exceptions.ImagemException;
 import br.com.justgeek.mobile.service.impl.imagens.ImagemProdutoServiceImpl;

@@ -1,8 +1,10 @@
 package br.com.justgeek.mobile.dto;
 
 import br.com.justgeek.mobile.entities.Usuario;
+import br.com.justgeek.mobile.exceptions.ContaException;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.NoArgsConstructor;
+import org.apache.commons.validator.routines.EmailValidator;
 
 import java.time.LocalDate;
 
@@ -20,16 +22,12 @@ public class UsuarioDTO {
     private String email;
     private String senha;
 
-    public Usuario gerar() {
-        Usuario usuario = new Usuario();
-        usuario.setNome(this.nome);
-        usuario.setSobrenome(this.sobrenome);
-        usuario.setDataNascimento(this.dataNascimento);
-        usuario.setCpf(this.cpf);
-        usuario.setCelular(this.celular);
-        usuario.setEmail(this.email);
-        usuario.setSenha(this.senha);
-        return usuario;
+    public Usuario dtoParaEntidade() {
+        if (EmailValidator.getInstance().isValid(email)) {
+            return new Usuario(email, sobrenome, dataNascimento, cpf, celular, email, senha);
+        } else {
+            throw new ContaException("[CADASTRO] Email inserido inválido!");
+        }
     }
 
     public String getNome() {

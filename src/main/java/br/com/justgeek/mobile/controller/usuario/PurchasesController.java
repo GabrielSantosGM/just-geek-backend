@@ -1,4 +1,4 @@
-package br.com.justgeek.mobile.rest.usuario;
+package br.com.justgeek.mobile.controller.usuario;
 
 import br.com.justgeek.mobile.enums.respostas.requisicoes.RespostasRequisicoesUsuarioEnum;
 import br.com.justgeek.mobile.mapper.produto.ProdutoCarrinhoMapper;

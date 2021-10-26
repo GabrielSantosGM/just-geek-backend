@@ -1,6 +1,5 @@
 package br.com.justgeek.mobile.service.impl.produto;
 
-import br.com.justgeek.mobile.api.legada.Frete;
 import br.com.justgeek.mobile.entities.*;
 import br.com.justgeek.mobile.exceptions.ProdutoException;
 import br.com.justgeek.mobile.repository.*;
@@ -87,16 +86,6 @@ public class ComprarProdutoServiceImpl implements ComprarProdutoService {
         itemCompraRepository.save(itemComprado);
     }
 
-    @Override
-    public Double calcularFrete(String cep) {
-        try {
-            Frete freight = new Frete("01414-001", cep);
-            return Double.parseDouble(freight.getValorFrete().replace(",", "."));
-        } catch (IllegalStateException e) {
-            throw new IllegalStateException("[CEP] Parâmetros informados inválidos para o cálculo.");
-        }
-    }
-
     public Carrinho criarCarrinho(int idUsuario) {
         Carrinho carrinho = new Carrinho();
         Usuario usuario = verificaUsuario(idUsuario);
@@ -119,11 +108,7 @@ public class ComprarProdutoServiceImpl implements ComprarProdutoService {
 
     private ItemCompra verificaItemComprado(int idUsuario, int idProduto) {
         Optional<ItemCompra> itemCompra = itemCompraRepository.findByFkCarrinhoFkUsuarioIdUsuarioAndFkProdutoIdProdutoAndFkCarrinhoFinalizadoFalseAndStatusTrue(idUsuario, idProduto);
-        if (itemCompra.isPresent()) {
-            return itemCompra.get();
-        } else {
-            return new ItemCompra();
-        }
+        return itemCompra.orElseGet(ItemCompra::new);
     }
 
     private ProdutoFavorito verificaItemFavoritado(int idProdutoFavoritado) {

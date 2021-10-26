@@ -3,7 +3,6 @@ package br.com.justgeek.mobile.service.impl.perfil;
 import br.com.justgeek.mobile.enums.respostas.requisicoes.RespostasRequisicoesUsuarioEnum;
 import br.com.justgeek.mobile.mapper.usuario.PerfilMapper;
 import br.com.justgeek.mobile.entities.Usuario;
-import br.com.justgeek.mobile.dto.UsuarioDTO;
 import br.com.justgeek.mobile.exceptions.ContaException;
 import br.com.justgeek.mobile.exceptions.EnderecoException;
 import br.com.justgeek.mobile.messages.ContaUsuarioMensagens;
@@ -27,15 +26,15 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario cadastrar(UsuarioDTO usuario) {
-        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(usuario.gerar().getEmail());
+    public Usuario cadastrar(Usuario usuario) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(usuario.getEmail());
 
         if (optionalUsuario.isPresent()) {
             throw new ContaException("[Perfil] Já existe uma conta cadastrada com esse email.");
         } else {
             try {
                 LOG.info("[Perfil] Cadastrando usuário...");
-                return usuarioRepository.save(usuario.gerar());
+                return usuarioRepository.save(usuario);
             } catch (Exception e) {
                 throw new ContaException(RespostasRequisicoesUsuarioEnum.MENSAGEM_VALIDACAO.getResposta());
             }

@@ -44,6 +44,12 @@
         </dependency>
 
         <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>br.com.caelum.stella</groupId>
             <artifactId>caelum-stella-boleto</artifactId>
             <version>2.1.2</version>

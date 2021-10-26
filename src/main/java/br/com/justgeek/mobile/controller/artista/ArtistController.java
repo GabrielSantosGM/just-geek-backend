@@ -1,4 +1,4 @@
-package br.com.justgeek.mobile.rest.artista;
+package br.com.justgeek.mobile.controller.artista;
 
 import br.com.justgeek.mobile.configs.Authenticated;
 import br.com.justgeek.mobile.dto.ArtistaDTO;

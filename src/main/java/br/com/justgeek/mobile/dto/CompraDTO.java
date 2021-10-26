@@ -1,16 +1,22 @@
 package br.com.justgeek.mobile.dto;
 
+import br.com.justgeek.mobile.entities.Carrinho;
 import lombok.NoArgsConstructor;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 @NoArgsConstructor
 public class CompraDTO {
 
     private String nomeComprador;
     private String protocoloPedido;
-    private String nomeProduto;
-    private Double valorFrete;
-    private Double valorCompra;
-    private Integer quantidade;
+    private Double valorTotal;
+
+    public CompraDTO(Carrinho carrinho) {
+        this.nomeComprador = carrinho.getFkUsuario().getNome() + " " + carrinho.getFkUsuario().getSobrenome();
+        this.protocoloPedido = "CMP-JG#" + ThreadLocalRandom.current().nextInt(1,1000);
+        this.valorTotal = carrinho.getValorTotal();
+    }
 
     public String getNomeComprador() {
         return nomeComprador;
@@ -28,35 +34,11 @@ public class CompraDTO {
         this.protocoloPedido = protocoloPedido;
     }
 
-    public String getNomeProduto() {
-        return nomeProduto;
+    public Double getValorTotal() {
+        return valorTotal;
     }
 
-    public void setNomeProduto(String nomeProduto) {
-        this.nomeProduto = nomeProduto;
-    }
-
-    public Double getValorFrete() {
-        return valorFrete;
-    }
-
-    public void setValorFrete(Double valorFrete) {
-        this.valorFrete = valorFrete;
-    }
-
-    public Double getValorCompra() {
-        return valorCompra;
-    }
-
-    public void setValorCompra(Double valorCompra) {
-        this.valorCompra = valorCompra;
-    }
-
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
     }
 }

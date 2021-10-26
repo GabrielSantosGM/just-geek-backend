@@ -1,4 +1,4 @@
-package br.com.justgeek.mobile.rest.produto.roupa;
+package br.com.justgeek.mobile.controller.produto.roupa;
 
 import br.com.justgeek.mobile.entities.Roupa;
 import br.com.justgeek.mobile.dto.RoupaDTO;

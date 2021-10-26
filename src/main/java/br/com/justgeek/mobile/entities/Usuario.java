@@ -94,6 +94,19 @@ public class Usuario {
         this.autenticado = false;
     }
 
+    public Usuario(String nome, String sobrenome, LocalDate dataNascimento, String cpf, String celular, String email, String senha) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.dataNascimento = dataNascimento;
+        this.cpf = cpf;
+        this.celular = celular;
+        this.email = email;
+        this.senha = senha;
+        this.primeiraCompra = true;
+        this.primeiroAcesso = true;
+        this.autenticado = false;
+    }
+
     public Integer getIdUsuario() {
         return idUsuario;
     }

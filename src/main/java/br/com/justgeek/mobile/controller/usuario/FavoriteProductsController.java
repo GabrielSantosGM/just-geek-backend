@@ -1,4 +1,4 @@
-package br.com.justgeek.mobile.rest.usuario;
+package br.com.justgeek.mobile.controller.usuario;
 
 import br.com.justgeek.mobile.mapper.produto.ProdutoFavoritoMapper;
 import br.com.justgeek.mobile.configs.Authenticated;
