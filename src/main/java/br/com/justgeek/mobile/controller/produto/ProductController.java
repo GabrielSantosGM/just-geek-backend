@@ -74,7 +74,7 @@ public class ProductController extends Authenticated {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         } else {
-            LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_AUTENTICACAO.getResposta(), idUser);
+            LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -92,7 +92,7 @@ public class ProductController extends Authenticated {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         } else {
-            LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_AUTENTICACAO.getResposta(), idUser);
+            LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -111,7 +111,7 @@ public class ProductController extends Authenticated {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         } else {
-            LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_AUTENTICACAO.getResposta(), idUser);
+            LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -130,7 +130,7 @@ public class ProductController extends Authenticated {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         } else {
-            LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_AUTENTICACAO.getResposta(), idUser);
+            LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }

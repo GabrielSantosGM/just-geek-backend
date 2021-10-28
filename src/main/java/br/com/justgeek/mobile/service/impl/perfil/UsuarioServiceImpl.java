@@ -5,7 +5,6 @@ import br.com.justgeek.mobile.mapper.usuario.PerfilMapper;
 import br.com.justgeek.mobile.entities.Usuario;
 import br.com.justgeek.mobile.exceptions.ContaException;
 import br.com.justgeek.mobile.exceptions.EnderecoException;
-import br.com.justgeek.mobile.messages.ContaUsuarioMensagens;
 import br.com.justgeek.mobile.repository.UsuarioRepository;
 import br.com.justgeek.mobile.service.UsuarioService;
 import org.slf4j.Logger;
@@ -92,7 +91,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 usuario.setIdUsuario(usuarioConectado.get().getIdUsuario());
                 return usuarioRepository.save(usuario);
             } catch (Exception e) {
-                throw new ContaException(ContaUsuarioMensagens.MENSAGEM_VALIDACAO);
+                throw new ContaException(RespostasRequisicoesUsuarioEnum.MENSAGEM_VALIDACAO.getResposta());
             }
         }
     }
@@ -109,7 +108,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 usuarioRepository.save(usuario);
                 return usuario;
             } catch (Exception e) {
-                throw new ContaException(ContaUsuarioMensagens.MENSAGEM_VALIDACAO);
+                throw new ContaException(RespostasRequisicoesUsuarioEnum.MENSAGEM_VALIDACAO.getResposta());
             }
         }
         throw new ContaException("[Perfil] Não foi possível recuperar o ID " + idUsuario + " do usuário.");

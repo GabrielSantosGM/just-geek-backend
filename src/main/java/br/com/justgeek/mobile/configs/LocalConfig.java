@@ -15,6 +15,6 @@ public class LocalConfig {
 
     @Bean
     public CommandLineRunner executar() {
-        return args -> LOG.info("[AMBIENTE] Subindo ambiente de desenvolvimento!");
+        return args -> LOG.info("[AMBIENTE] SUBINDO AMBIENTE DE DESENVOLVIMENTO!");
     }
 }

@@ -2,8 +2,9 @@ package br.com.justgeek.mobile.enums.respostas.requisicoes;
 
 public enum RespostasRequisicoesUsuarioEnum {
 
-    MENSAGEM_VALIDACAO("[Perfil] Erro na validação do cadastro do usuário de ID {}."),
-    MENSAGEM_AUTENTICACAO("[Perfil] Erro na autenticacao do usuário de ID {}.");
+    MENSAGEM_VALIDACAO("[PERFIL] ERRO NA VALIDACAO DO CADASTRO DO USUARIO DE ID {}."),
+    MENSAGEM_AUTENTICACAO("[PERFIL] ERRO NA AUTENTICACAO DO USUARIO DE ID {}."),
+    MENSAGEM_UNAUTHORIZED("[PERFIL] USUARIO DE ID {} NAO AUTORIZADO");
 
     private final String resposta;
 

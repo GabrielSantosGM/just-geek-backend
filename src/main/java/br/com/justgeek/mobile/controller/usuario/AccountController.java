@@ -1,12 +1,12 @@
 package br.com.justgeek.mobile.controller.usuario;
 
+import br.com.justgeek.mobile.enums.respostas.requisicoes.RespostasRequisicoesUsuarioEnum;
 import br.com.justgeek.mobile.mapper.LoginUsuarioMapper;
 import br.com.justgeek.mobile.mapper.usuario.PerfilMapper;
 import br.com.justgeek.mobile.configs.Authenticated;
 import br.com.justgeek.mobile.entities.Usuario;
 import br.com.justgeek.mobile.dto.UsuarioDTO;
 import br.com.justgeek.mobile.exceptions.ContaException;
-import br.com.justgeek.mobile.messages.ContaUsuarioMensagens;
 import br.com.justgeek.mobile.repository.UsuarioRepository;
 import br.com.justgeek.mobile.service.impl.perfil.UsuarioServiceImpl;
 import org.slf4j.Logger;
@@ -78,7 +78,7 @@ public class AccountController extends Authenticated {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
         }
-        LOG.warn(ContaUsuarioMensagens.MENSAGEM_UNAUTHORIZED, idUser);
+        LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
@@ -94,7 +94,7 @@ public class AccountController extends Authenticated {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         }
-        LOG.warn(ContaUsuarioMensagens.MENSAGEM_UNAUTHORIZED, idUser);
+        LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
@@ -110,7 +110,7 @@ public class AccountController extends Authenticated {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         }
-        LOG.warn(ContaUsuarioMensagens.MENSAGEM_UNAUTHORIZED, idUser);
+        LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
     }

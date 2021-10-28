@@ -1,11 +1,11 @@
 package br.com.justgeek.mobile.controller.usuario;
 
+import br.com.justgeek.mobile.enums.respostas.requisicoes.RespostasRequisicoesUsuarioEnum;
 import br.com.justgeek.mobile.mapper.usuario.DadosEnderecoMapper;
 import br.com.justgeek.mobile.configs.Authenticated;
 import br.com.justgeek.mobile.entities.Endereco;
 import br.com.justgeek.mobile.dto.EnderecoDTO;
 import br.com.justgeek.mobile.exceptions.EnderecoException;
-import br.com.justgeek.mobile.messages.ContaUsuarioMensagens;
 import br.com.justgeek.mobile.repository.UsuarioRepository;
 import br.com.justgeek.mobile.service.impl.perfil.EnderecoServiceImpl;
 import org.slf4j.Logger;
@@ -43,7 +43,7 @@ public class AddressController extends Authenticated {
             LOG.warn("Retornando endereços...");
             return ResponseEntity.status(HttpStatus.OK).body(enderecos);
         }
-        LOG.warn(ContaUsuarioMensagens.MENSAGEM_UNAUTHORIZED, idUser);
+        LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
@@ -59,7 +59,7 @@ public class AddressController extends Authenticated {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         }
-        LOG.warn(ContaUsuarioMensagens.MENSAGEM_UNAUTHORIZED, idUser);
+        LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
@@ -76,7 +76,7 @@ public class AddressController extends Authenticated {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         }
-        LOG.warn(ContaUsuarioMensagens.MENSAGEM_UNAUTHORIZED, idUser);
+        LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }
