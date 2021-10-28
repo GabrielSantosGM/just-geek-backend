@@ -34,12 +34,21 @@ public class ImagemProdutoServiceImpl implements ImagemProdutoService {
     }
 
     @Override
-    public List<byte[]> retornaImagensProduto(int idProduto) {
+    public byte[] retornarPrimeiraImagem(int idProduto) {
         List<ImagemProduto> imagens = imagemRepository.findByFkProdutoIdProduto(idProduto);
-        if (imagens.isEmpty()) {
-            throw new ImagemException("Nenhuma imagem associada ao produto de ID" + idProduto);
-        }
-        return ImagensUtils.retornaImagens(imagens);
+        return ImagensUtils.retornaUma(imagens);
+    }
+
+    @Override
+    public byte[] retornarSegundaImagem(int idProduto) {
+        List<ImagemProduto> imagens = imagemRepository.findByFkProdutoIdProduto(idProduto);
+        return imagens.get(1).getImagem();
+    }
+
+    @Override
+    public byte[] retornarTerceiraImagem(int idProduto) {
+        List<ImagemProduto> imagens = imagemRepository.findByFkProdutoIdProduto(idProduto);
+        return imagens.get(2).getImagem();
     }
 
     @Override

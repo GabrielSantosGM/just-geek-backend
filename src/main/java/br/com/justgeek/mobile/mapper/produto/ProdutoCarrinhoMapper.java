@@ -9,7 +9,7 @@ public class ProdutoCarrinhoMapper {
     private Integer idProduto;
     private String nomeProduto;
     private Double preco;
-    private String imagens;
+    private String imagem;
     private Integer quantidade;
 
     @Autowired
@@ -19,7 +19,7 @@ public class ProdutoCarrinhoMapper {
                 produto.getTema() + " - " +
                 produto.getPersonagem();
         this.preco = produto.getPreco();
-        this.imagens = "/products-images/" + idProduto;
+        this.imagem = "/products-images/image-one/" + idProduto;
         this.quantidade = quantityProductService.retornaQuantidadeDoProduto(idProduto);
     }
 
@@ -39,8 +39,8 @@ public class ProdutoCarrinhoMapper {
         return preco;
     }
 
-    public String getImagens() {
-        return imagens;
+    public String getImagem() {
+        return imagem;
     }
 
     public Integer getQuantidade() {

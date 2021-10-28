@@ -9,7 +9,9 @@ public class ProdutoMapper {
     private Double preco;
     private String especificacoes;
     private String descricao;
-    private String imagens;
+    private String primeiraImagem;
+    private String segundaImagem;
+    private String terceiraImagem;
 
     private ProdutoMapper(Produto produto) {
         this.idProduto = produto.getIdProduto();
@@ -19,7 +21,9 @@ public class ProdutoMapper {
         this.preco = produto.getPreco();
         this.especificacoes = produto.getFkRoupa().getEspecificacoes();
         this.descricao = produto.getDescricao();
-        this.imagens = "/products-images/" + idProduto;
+        this.primeiraImagem = "/products-images/image-one/" + idProduto;
+        this.segundaImagem = "/products-images/image-two/" + idProduto;
+        this.terceiraImagem = "/products-images/image-three/" + idProduto;
     }
 
     public static ProdutoMapper gerar(Produto produto) {
@@ -46,7 +50,15 @@ public class ProdutoMapper {
         return descricao;
     }
 
-    public String getImagens() {
-        return imagens;
+    public String getPrimeiraImagem() {
+        return primeiraImagem;
+    }
+
+    public String getSegundaImagem() {
+        return segundaImagem;
+    }
+
+    public String getTerceiraImagem() {
+        return terceiraImagem;
     }
 }

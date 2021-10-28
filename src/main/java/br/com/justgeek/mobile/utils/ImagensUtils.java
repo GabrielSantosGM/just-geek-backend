@@ -21,4 +21,11 @@ public class ImagensUtils {
 
         return imagensRetornadas;
     }
+
+    public static byte[] retornaUma(List<ImagemProduto> imagens) {
+        if (imagens.size() > 0) {
+            return imagens.get(0).getImagem();
+        }
+        return null;
+    }
 }

@@ -7,7 +7,7 @@ public class ProdutoFavoritoMapper {
     private Integer idProduto;
     private String nomeProduto;
     private Double preco;
-    private String imagens;
+    private String imagem;
 
     private ProdutoFavoritoMapper(ProdutoFavorito produto) {
         this.idProduto = produto.getFkProduto().getIdProduto();
@@ -15,7 +15,7 @@ public class ProdutoFavoritoMapper {
                 produto.getFkProduto().getTema() + " - " +
                 produto.getFkProduto().getPersonagem();
         this.preco = produto.getFkProduto().getPreco();
-        this.imagens = "/products-images/" + idProduto;
+        this.imagem = "/products-images/image-one/" + idProduto;
     }
 
     public static ProdutoFavoritoMapper gerar(ProdutoFavorito produto) {
@@ -34,7 +34,7 @@ public class ProdutoFavoritoMapper {
         return preco;
     }
 
-    public String getImagens() {
-        return imagens;
+    public String getImagem() {
+        return imagem;
     }
 }
