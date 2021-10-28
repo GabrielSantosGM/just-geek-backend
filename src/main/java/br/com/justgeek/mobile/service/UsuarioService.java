@@ -2,7 +2,6 @@ package br.com.justgeek.mobile.service;
 
 import br.com.justgeek.mobile.mapper.usuario.PerfilMapper;
 import br.com.justgeek.mobile.entities.Usuario;
-import br.com.justgeek.mobile.dto.UsuarioDTO;
 
 public interface UsuarioService {
 

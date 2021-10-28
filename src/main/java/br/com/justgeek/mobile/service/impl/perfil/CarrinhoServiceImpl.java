@@ -114,14 +114,6 @@ public class CarrinhoServiceImpl implements CarrinhoService {
                 });
     }
 
-    private ItemCompra verificaItemComprado(int idUsuario, int idProduto) {
-        return itemCompraRepository
-                .findByFkCarrinhoFkUsuarioIdUsuarioAndFkProdutoIdProdutoAndFkCarrinhoFinalizadoFalseAndStatusTrue(idUsuario, idProduto)
-                .orElseThrow(() -> {
-                    throw new ProdutoException("[Verificação Produto] Falha ao recuperar os dados do item.");
-                });
-    }
-
     private Usuario verificaUsuario(int idUsuario) {
         return usuarioRepository.findByIdUsuario(idUsuario).orElseThrow(() -> {
             throw new ProdutoException("[Verificação Usuário] Falha ao recuperar dados do produto de ID " + idUsuario);
