@@ -16,4 +16,6 @@ public interface UsuarioService {
     Usuario atualizarConta(int idUsuario, Usuario usuario);
 
     Usuario mudarSenha(int idUsuario, String novaSenha);
+
+    void deletarConta(int idUsuario);
 }

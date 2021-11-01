@@ -114,4 +114,15 @@ public class AccountController extends Authenticated {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
     }
+
+    @DeleteMapping("/{idUser}")
+    public ResponseEntity<String> deleteAccount(@PathVariable int idUser) {
+        if (authenticate(idUser)) {
+            serviceUser.deletarConta(idUser);
+            return ResponseEntity.status(HttpStatus.OK).body("CONTA EXCLUIDA COM SUCESSO.");
+        } else {
+            LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("USUARIO NAO AUTENTICADO.");
+        }
+    }
 }

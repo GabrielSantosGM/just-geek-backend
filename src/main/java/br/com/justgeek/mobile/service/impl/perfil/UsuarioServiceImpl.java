@@ -113,5 +113,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         throw new ContaException("[Perfil] Não foi possível recuperar o ID " + idUsuario + " do usuário.");
     }
+
+    @Override
+    public void deletarConta(int idUsuario) {
+        Usuario usuarioConectado = usuarioRepository.findByIdUsuario(idUsuario)
+                .orElseThrow(() -> {
+                    throw new ContaException(RespostasRequisicoesUsuarioEnum.MENSAGEM_NOT_FOUND.getResposta());
+                });
+
+        LOG.info("DELETANDO CONTA DO USUARIO DE ID {}", idUsuario);
+        usuarioRepository.delete(usuarioConectado);
+    }
 }
 
