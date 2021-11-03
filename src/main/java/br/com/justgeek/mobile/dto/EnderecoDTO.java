@@ -2,7 +2,9 @@ package br.com.justgeek.mobile.dto;
 
 import br.com.justgeek.mobile.entities.Endereco;
 import br.com.justgeek.mobile.entities.Usuario;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class EnderecoDTO {
 
     private String cep;
@@ -14,9 +16,6 @@ public class EnderecoDTO {
     private String cidade;
     private String uf;
     private Usuario fkUsuario;
-
-    private EnderecoDTO() {
-    }
 
     private EnderecoDTO(Endereco endereco, Usuario usuario) {
         this.cep = endereco.getCep();

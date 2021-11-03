@@ -13,11 +13,11 @@ public enum CupomDescontoEnum {
 
     public static CupomDescontoEnum valueFrom(String name){
         for(CupomDescontoEnum cupomEnum : CupomDescontoEnum.values()){
-            if(cupomEnum.name().equalsIgnoreCase(name)){
+            if(cupomEnum.name().contains(name)){
                 return cupomEnum;
             }
         }
-        throw new IllegalStateException("Não existe cupom associado a [" + name + "].");
+        throw new IllegalStateException("NAO EXISTE CUPOM ASSOCIADO A [" + name + "].");
     }
 
     public Integer getPorcentagemDesconto() {
