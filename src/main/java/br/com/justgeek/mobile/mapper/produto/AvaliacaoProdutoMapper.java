@@ -4,9 +4,9 @@ import br.com.justgeek.mobile.entities.AvaliacaoProduto;
 
 public class AvaliacaoProdutoMapper {
 
-    private String nomeAvaliador;
-    private Double nota;
-    private String comentario;
+    private final String nomeAvaliador;
+    private final Double nota;
+    private final String comentario;
 
     public AvaliacaoProdutoMapper(AvaliacaoProduto avaliacaoProduto) {
         this.nomeAvaliador = avaliacaoProduto.getFkUsuario().getNome() + " " + avaliacaoProduto.getFkUsuario().getSobrenome();

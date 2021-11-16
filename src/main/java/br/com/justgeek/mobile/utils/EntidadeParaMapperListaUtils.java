@@ -25,10 +25,10 @@ public class EntidadeParaMapperListaUtils {
         return produtosRetornados;
     }
 
-    public static List<ProdutoCarrinhoMapper> listaProdutosNoCarrinho(List<Produto> produtos, QuantityProductServiceImpl quantityProductService) {
+    public static List<ProdutoCarrinhoMapper> listaProdutosNoCarrinho(Integer idUsuario, List<Produto> produtos, QuantityProductServiceImpl quantityProductService) {
         List<ProdutoCarrinhoMapper> produtosRetornados = new ArrayList<>();
 
-        produtos.forEach(produto -> produtosRetornados.add(ProdutoCarrinhoMapper.gerar(produto, quantityProductService)));
+        produtos.forEach(produto -> produtosRetornados.add(ProdutoCarrinhoMapper.gerar(idUsuario, produto, quantityProductService)));
         return produtosRetornados;
     }
 

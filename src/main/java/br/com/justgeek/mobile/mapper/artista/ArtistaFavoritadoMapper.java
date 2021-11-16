@@ -4,9 +4,9 @@ import br.com.justgeek.mobile.entities.ArtistaFavorito;
 
 public class ArtistaFavoritadoMapper {
 
-    private Integer idArtista;
-    private String nome;
-    private String imagemPerfil;
+    private final Integer idArtista;
+    private final String nome;
+    private final String imagemPerfil;
 
     public ArtistaFavoritadoMapper(ArtistaFavorito artista) {
         this.idArtista = artista.getFkArtista().getIdArtista();

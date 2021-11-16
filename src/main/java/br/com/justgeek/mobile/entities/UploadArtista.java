@@ -13,8 +13,8 @@ public class UploadArtista {
     private Integer idUpload;
 
     @NotNull
-    @Column(name = "imagem",length = 999_999_999)
-    private byte[] imagem;
+    @Column(name = "imagem")
+    private String imagem;
 
     @ManyToOne
     @JoinColumn(name = "fk_artista")
@@ -28,11 +28,11 @@ public class UploadArtista {
         this.idUpload = idUpload;
     }
 
-    public byte[] getImagem() {
+    public String getImagem() {
         return imagem;
     }
 
-    public void setImagem(byte[] imagem) {
+    public void setImagem(String imagem) {
         this.imagem = imagem;
     }
 

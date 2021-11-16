@@ -1,6 +1,7 @@
 package br.com.justgeek.mobile.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "imagem_produto")
@@ -11,8 +12,9 @@ public class ImagemProduto {
     @Column(name = "id_imagem")
     private Integer idImagem;
 
-    @Column(name = "imagem", length = 999_999_999)
-    private byte[] imagem;
+    @NotNull
+    @Column(name = "imagem")
+    private String imagem;
 
     @ManyToOne
     @JoinColumn(name = "fk_produto_imagem")
@@ -26,11 +28,11 @@ public class ImagemProduto {
         this.idImagem = idImagem;
     }
 
-    public byte[] getImagem() {
+    public String getImagem() {
         return imagem;
     }
 
-    public void setImagem(byte[] imagem) {
+    public void setImagem(String imagem) {
         this.imagem = imagem;
     }
 

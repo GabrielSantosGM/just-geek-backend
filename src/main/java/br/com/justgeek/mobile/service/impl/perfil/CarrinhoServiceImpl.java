@@ -50,7 +50,7 @@ public class CarrinhoServiceImpl implements CarrinhoService {
         if (produtos.isEmpty()) {
             throw new CarrinhoException("[CARRINHO] Não foram encontrados produtos no carrinho.");
         } else {
-            return EntidadeParaMapperListaUtils.listaProdutosNoCarrinho(produtos, new QuantityProductServiceImpl(itemCompraRepository));
+            return EntidadeParaMapperListaUtils.listaProdutosNoCarrinho(idUsuario, produtos, new QuantityProductServiceImpl(itemCompraRepository));
         }
     }
 

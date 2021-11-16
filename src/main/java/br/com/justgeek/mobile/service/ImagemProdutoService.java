@@ -6,11 +6,7 @@ import java.util.List;
 
 public interface ImagemProdutoService {
 
-    byte[] retornarPrimeiraImagem(int idProduto);
-
-    byte[] retornarSegundaImagem(int idProduto);
-
-    byte[] retornarTerceiraImagem(int idProduto);
+    List<String> retornarImagens(int idProduto);
 
     List<MultipartFile> uploadImagemProduto(int idProduto,
                                             MultipartFile imagem1,

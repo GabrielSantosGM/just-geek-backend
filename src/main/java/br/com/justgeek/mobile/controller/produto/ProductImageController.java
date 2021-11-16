@@ -39,19 +39,14 @@ public class ProductImageController {
         }
     }
 
-    @GetMapping("/image-one/{idProduct}")
-    public ResponseEntity<byte[]> returnFirstImage(@PathVariable int idProduct) {
-        return ResponseEntity.status(200).header("content-type", "image/jpeg").body(imagemProdutoService.retornarPrimeiraImagem(idProduct));
+    @GetMapping("/images/{idProduct}")
+    public ResponseEntity<List<String>> returnFirstImage(@PathVariable int idProduct) {
+        try {
+            LOG.info("[IMAGEM DO PRODUTO] RETORNANDO IMAGENS!");
+            return ResponseEntity.status(200).body(imagemProdutoService.retornarImagens(idProduct));
+        } catch (NullPointerException e) {
+            LOG.warn(e.getMessage());
+            return ResponseEntity.status(204).build();
+        }
     }
-
-    @GetMapping("/image-two/{idProduct}")
-    public ResponseEntity<byte[]> returnSecondImage(@PathVariable int idProduct) {
-        return ResponseEntity.status(200).header("content-type", "image/jpeg").body(imagemProdutoService.retornarSegundaImagem(idProduct));
-    }
-
-    @GetMapping("/image-three/{idProduct}")
-    public ResponseEntity<byte[]> returnThirdImage(@PathVariable int idProduct) {
-        return ResponseEntity.status(200).header("content-type", "image/jpeg").body(imagemProdutoService.retornarTerceiraImagem(idProduct));
-    }
-
 }

@@ -1,13 +1,17 @@
 package br.com.justgeek.mobile.mapper.produto;
 
+import br.com.justgeek.mobile.entities.ImagemProduto;
 import br.com.justgeek.mobile.entities.ProdutoFavorito;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProdutoFavoritoMapper {
 
-    private Integer idProduto;
-    private String nomeProduto;
-    private Double preco;
-    private String imagem;
+    private final Integer idProduto;
+    private final String nomeProduto;
+    private final Double preco;
+    private final List<String> imagens;
 
     private ProdutoFavoritoMapper(ProdutoFavorito produto) {
         this.idProduto = produto.getFkProduto().getIdProduto();
@@ -15,7 +19,7 @@ public class ProdutoFavoritoMapper {
                 produto.getFkProduto().getTema() + " - " +
                 produto.getFkProduto().getPersonagem();
         this.preco = produto.getFkProduto().getPreco();
-        this.imagem = "/products-images/image-one/" + idProduto;
+        this.imagens = produto.getFkProduto().getImagens().stream().map(ImagemProduto::getImagem).collect(Collectors.toList());
     }
 
     public static ProdutoFavoritoMapper gerar(ProdutoFavorito produto) {
@@ -34,7 +38,7 @@ public class ProdutoFavoritoMapper {
         return preco;
     }
 
-    public String getImagem() {
-        return imagem;
+    public List<String> getImagens() {
+        return imagens;
     }
 }

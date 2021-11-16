@@ -34,21 +34,12 @@ public class ImagemProdutoServiceImpl implements ImagemProdutoService {
     }
 
     @Override
-    public byte[] retornarPrimeiraImagem(int idProduto) {
+    public List<String> retornarImagens(int idProduto) {
         List<ImagemProduto> imagens = imagemRepository.findByFkProdutoIdProduto(idProduto);
-        return ImagensUtils.retornaUma(imagens);
-    }
-
-    @Override
-    public byte[] retornarSegundaImagem(int idProduto) {
-        List<ImagemProduto> imagens = imagemRepository.findByFkProdutoIdProduto(idProduto);
-        return imagens.get(1).getImagem();
-    }
-
-    @Override
-    public byte[] retornarTerceiraImagem(int idProduto) {
-        List<ImagemProduto> imagens = imagemRepository.findByFkProdutoIdProduto(idProduto);
-        return imagens.get(2).getImagem();
+        if (imagens.isEmpty()) {
+            throw new NullPointerException("NENHUMA IMAGEM FOI ENCONTRADA!");
+        }
+        return ImagensUtils.retornaImagens(imagens);
     }
 
     @Override
@@ -76,24 +67,24 @@ public class ImagemProdutoServiceImpl implements ImagemProdutoService {
                                              MultipartFile imagem3,
                                              Optional<Produto> produto) throws IOException {
         List<MultipartFile> imagens = new ArrayList<>();
-        imagens.add(imagem1);
-        imagens.add(imagem2);
-        imagens.add(imagem3);
-
-        for (int i = 0; i < imagens.size(); i++) {
-            if (imagens.get(i) != null) {
-                if (imagemRepository.countByFkProdutoIdProduto(idProduto) == 3) {
-                    throw new ImagemException("[Imagem] Excedido a quantidade de upload de imagens desse produto");
-                } else {
-                    ImagemProduto imagem = new ImagemProduto();
-                    imagem.setImagem(imagens.get(i).getBytes());
-                    imagem.setFkProduto(produto.get());
-                    imagemRepository.save(imagem);
-                }
-            } else {
-                LOG.warn("[Imagem] O indíce [ {} ] aponta que está nulo o campo.", i);
-            }
-        }
+//        imagens.add(imagem1);
+//        imagens.add(imagem2);
+//        imagens.add(imagem3);
+//
+//        for (int i = 0; i < imagens.size(); i++) {
+//            if (imagens.get(i) != null) {
+//                if (imagemRepository.countByFkProdutoIdProduto(idProduto) == 3) {
+//                    throw new ImagemException("[Imagem] Excedido a quantidade de upload de imagens desse produto");
+//                } else {
+//                    ImagemProduto imagem = new ImagemProduto();
+//                    imagem.setImagem(imagens.get(i).getBytes());
+//                    imagem.setFkProduto(produto.get());
+//                    imagemRepository.save(imagem);
+//                }
+//            } else {
+//                LOG.warn("[Imagem] O indíce [ {} ] aponta que está nulo o campo.", i);
+//            }
+//        }
         return imagens;
     }
 }

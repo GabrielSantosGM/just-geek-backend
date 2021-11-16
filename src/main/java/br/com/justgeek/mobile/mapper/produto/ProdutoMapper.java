@@ -1,17 +1,19 @@
 package br.com.justgeek.mobile.mapper.produto;
 
+import br.com.justgeek.mobile.entities.ImagemProduto;
 import br.com.justgeek.mobile.entities.Produto;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProdutoMapper {
 
-    private Integer idProduto;
-    private String nomeProduto;
-    private Double preco;
-    private String especificacoes;
-    private String descricao;
-    private String primeiraImagem;
-    private String segundaImagem;
-    private String terceiraImagem;
+    private final Integer idProduto;
+    private final String nomeProduto;
+    private final Double preco;
+    private final String especificacoes;
+    private final String descricao;
+    private final List<String> imagens;
 
     private ProdutoMapper(Produto produto) {
         this.idProduto = produto.getIdProduto();
@@ -21,9 +23,7 @@ public class ProdutoMapper {
         this.preco = produto.getPreco();
         this.especificacoes = produto.getFkRoupa().getEspecificacoes();
         this.descricao = produto.getDescricao();
-        this.primeiraImagem = "/products-images/image-one/" + idProduto;
-        this.segundaImagem = "/products-images/image-two/" + idProduto;
-        this.terceiraImagem = "/products-images/image-three/" + idProduto;
+        this.imagens = produto.getImagens().stream().map(ImagemProduto::getImagem).collect(Collectors.toList());
     }
 
     public static ProdutoMapper gerar(Produto produto) {
@@ -50,15 +50,7 @@ public class ProdutoMapper {
         return descricao;
     }
 
-    public String getPrimeiraImagem() {
-        return primeiraImagem;
-    }
-
-    public String getSegundaImagem() {
-        return segundaImagem;
-    }
-
-    public String getTerceiraImagem() {
-        return terceiraImagem;
+    public List<String> getImagens() {
+        return imagens;
     }
 }

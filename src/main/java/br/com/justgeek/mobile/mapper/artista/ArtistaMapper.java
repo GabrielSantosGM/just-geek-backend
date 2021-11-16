@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 
 public class ArtistaMapper {
 
-    private Integer idArtista;
-    private String imagemPerfil;
-    private String nome;
-    private String apelido;
-    private String biografia;
-    private String contato;
-    private List<String> skills;
-    private List<String> programas;
+    private final Integer idArtista;
+    private final String imagemPerfil;
+    private final String nome;
+    private final String apelido;
+    private final String biografia;
+    private final String contato;
+    private final List<String> skills;
+    private final List<String> programas;
 
     private ArtistaMapper(Artista artista) {
         this.idArtista = artista.getIdArtista();

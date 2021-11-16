@@ -16,8 +16,8 @@ public class QuantityProductServiceImpl {
         this.itemCompraRepository = itemCompraRepository;
     }
 
-    public Integer retornaQuantidadeDoProduto(int idProduto) {
-        Optional<ItemCompra> itemCompra = itemCompraRepository.findByFkProdutoIdProdutoAndFkCarrinhoFinalizadoFalseAndStatusTrue(idProduto);
+    public Integer retornaQuantidadeDoProduto(int idUsuario, int idProduto) {
+        Optional<ItemCompra> itemCompra = itemCompraRepository.findByFkCarrinhoFkUsuarioIdUsuarioAndFkProdutoIdProdutoAndFkCarrinhoFinalizadoFalseAndStatusTrue(idUsuario, idProduto);
         if (itemCompra.isPresent()) {
             return itemCompra.get().getQuantidade();
         } else {
