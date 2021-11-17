@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,10 +25,10 @@ public class ProductImageController {
     }
 
     @PostMapping("/{idProduct}")
-    public ResponseEntity<List<MultipartFile>> uploadImagemProduto(@PathVariable int idProduct,
-                                                                   @RequestParam MultipartFile imagem1,
-                                                                   @RequestParam MultipartFile imagem2,
-                                                                   @RequestParam MultipartFile imagem3) {
+    public ResponseEntity<List<String>> uploadImagemProduto(@PathVariable int idProduct,
+                                                                   @RequestParam String imagem1,
+                                                                   @RequestParam String imagem2,
+                                                                   @RequestParam String imagem3) {
         try {
             imagemProdutoService.uploadImagemProduto(idProduct, imagem1, imagem2, imagem3);
             return ResponseEntity.status(HttpStatus.CREATED).build();
