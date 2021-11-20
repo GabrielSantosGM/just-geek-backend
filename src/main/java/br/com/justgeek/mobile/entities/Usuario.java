@@ -69,10 +69,6 @@ public class Usuario {
     private Boolean primeiraCompra;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "fkUsuario")
-    private List<AvaliacaoUsuario> avaliacoes;
-
-    @JsonIgnore
     @OneToOne(mappedBy = "fkUsuario")
     private Endereco endereco;
 
@@ -193,14 +189,6 @@ public class Usuario {
 
     public void setPrimeiraCompra(Boolean primeiraCompra) {
         this.primeiraCompra = primeiraCompra;
-    }
-
-    public List<AvaliacaoUsuario> getAvaliacoes() {
-        return avaliacoes;
-    }
-
-    public void setAvaliacoes(List<AvaliacaoUsuario> avaliacoes) {
-        this.avaliacoes = avaliacoes;
     }
 
     public Endereco getEndereco() {
