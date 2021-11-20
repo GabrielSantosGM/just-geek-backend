@@ -28,7 +28,7 @@ public class FilterProductController {
     @GetMapping("/product/{idProduct}")
     public ResponseEntity<ProdutoMapper> returnSpecificProduct(@PathVariable int idProduct) {
         try {
-            LOG.info("[Produtos] Retornando produto de ID {}...", idProduct);
+            LOG.info("[FILTRO] Retornando produto de ID {}...", idProduct);
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarProdutoEspecifico(idProduct));
         } catch (ProdutoException e) {
             LOG.warn(e.getMessage());
@@ -39,7 +39,7 @@ public class FilterProductController {
     @GetMapping("/similar/{idProduct}")
     public ResponseEntity<List<ProdutoMapper>> returnsSimilarProducts(@PathVariable int idProduct) {
         try {
-            LOG.info("[Produtos] Retornando produtos semelhantes do produto de ID {}...", idProduct);
+            LOG.info("[FILTRO] Retornando produtos semelhantes do produto de ID {}...", idProduct);
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarProdutosSemelhantes(idProduct));
         } catch (ProdutoException e) {
             LOG.warn(e.getMessage());
@@ -50,7 +50,7 @@ public class FilterProductController {
     @GetMapping("/category/{categoria}")
     public ResponseEntity<List<ProdutoMapper>> returnsCategoryProducts(@PathVariable String categoria) {
         try {
-            LOG.info("[Produtos] Retornando produtos de categoria {}...", categoria);
+            LOG.info("[FILTRO] Retornando produtos de categoria {}...", categoria);
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarProdutosCategoria(categoria));
         } catch (ProdutoException e) {
             LOG.info(e.getMessage());
@@ -61,7 +61,7 @@ public class FilterProductController {
     @GetMapping("/theme/{tema}")
     public ResponseEntity<List<ProdutoMapper>> returnsThemeProducts(@PathVariable String tema) {
         try {
-            LOG.info("[Produtos] Retornando produtos de tema {}...", tema);
+            LOG.info("[FILTRO] Retornando produtos de tema {}...", tema);
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarProdutosTema(tema));
         } catch (ProdutoException e) {
             LOG.info(e.getMessage());
@@ -72,8 +72,19 @@ public class FilterProductController {
     @GetMapping("/clothing/{roupa}")
     public ResponseEntity<List<ProdutoMapper>> returnsProductsByClothingModel(@PathVariable String roupa) {
         try {
-            LOG.info("[Produtos] Retornando produtos de roupa {}...", roupa);
+            LOG.info("[FILTRO] Retornando produtos de roupa {}...", roupa);
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarProdutosPorRoupa(roupa));
+        } catch (ProdutoException e) {
+            LOG.info(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+    }
+
+    @GetMapping("/promotion")
+    public ResponseEntity<List<ProdutoMapper>> returnsPromotionalProducts() {
+        try {
+            LOG.info("[FILTRO] RETORNANDO PRODUTOS EM PROMOCAO");
+            return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarProdutosEmPromocao());
         } catch (ProdutoException e) {
             LOG.info(e.getMessage());
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -83,7 +94,7 @@ public class FilterProductController {
     @GetMapping("/all-the-products")
     public ResponseEntity<List<ProdutoMapper>> returnsAllProducts() {
         try {
-            LOG.info("[Produtos] Retornando todos os produtos...");
+            LOG.info("[FILTRO] Retornando todos os produtos...");
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarTodosProdutos());
         } catch (ProdutoException e) {
             LOG.info(e.getMessage());
@@ -94,7 +105,7 @@ public class FilterProductController {
     @GetMapping("/most-popular")
     public ResponseEntity<List<ProdutoMapper>> returnsMostPopularProducts() {
         try {
-            LOG.info("[Produtos] Retornando produtos mais populares...");
+            LOG.info("[FILTRO] Retornando produtos mais populares...");
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarProdutosMaisPopulares());
         } catch (ProdutoException e) {
             LOG.info(e.getMessage());
@@ -105,7 +116,7 @@ public class FilterProductController {
     @GetMapping("/less-popular")
     public ResponseEntity<List<ProdutoMapper>> returnsLessPopularProducts() {
         try {
-            LOG.info("[Produtos] Retornando produtos menos populares...");
+            LOG.info("[FILTRO] Retornando produtos menos populares...");
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarProdutosMenosPopulares());
         } catch (ProdutoException e) {
             LOG.info(e.getMessage());
@@ -116,7 +127,7 @@ public class FilterProductController {
     @GetMapping("/customized")
     public ResponseEntity<List<ProdutoMapper>> returnsCustomizedProducts() {
         try {
-            LOG.info("[Produtos] Retornando produtos customizados...");
+            LOG.info("[FILTRO] Retornando produtos customizados...");
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarProdutosCustomizados());
         } catch (ProdutoException e) {
             LOG.info(e.getMessage());
@@ -127,7 +138,7 @@ public class FilterProductController {
     @GetMapping("/increasing-price")
     public ResponseEntity<List<ProdutoMapper>> returnsProductsIncreasingPrice() {
         try {
-            LOG.info("[Produtos] Retornando produtos com preços na ordem crescente...");
+            LOG.info("[FILTRO] Retornando produtos com preços na ordem crescente...");
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarProdutosPrecoCrescente());
         } catch (ProdutoException e) {
             LOG.info(e.getMessage());
@@ -138,7 +149,7 @@ public class FilterProductController {
     @GetMapping("/decreasing-price")
     public ResponseEntity<List<ProdutoMapper>> returnsProductsDecreasingPrice() {
         try {
-            LOG.info("[Produtos] Retornando produtos com preços na ordem decrescente...");
+            LOG.info("[FILTRO] Retornando produtos com preços na ordem decrescente...");
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarProdutosPrecoDecrescente());
         } catch (ProdutoException e) {
             LOG.info(e.getMessage());

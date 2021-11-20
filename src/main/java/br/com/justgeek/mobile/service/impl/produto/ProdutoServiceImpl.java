@@ -73,6 +73,17 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
     }
 
+    @Override
+    public List<AvaliacaoProdutoMapper> retornarMelhoresAvaliacoes() {
+        List<AvaliacaoProduto> avaliacoes = avaliacaoProdutoRepository.findTop4ByOrderByNotaDesc();
+
+        if (avaliacoes.isEmpty()) {
+            throw new ProdutoException("[AVALIACOES] Retornando melhores avaliacoes dos usuarios.");
+        } else {
+            return EntidadeParaMapperListaUtils.listaAvaliacoes(avaliacoes);
+        }
+    }
+
     private Usuario verificaUsuario(int idUsuario) {
         return usuarioRepository.findByIdUsuario(idUsuario).orElseThrow(() -> {
             throw new ProdutoException("[Verificacao Usuario] Falha ao recuperar dados do produto de ID " + idUsuario);

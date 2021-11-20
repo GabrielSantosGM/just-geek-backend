@@ -24,6 +24,8 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
     List<Produto> findByFkRoupaModeloIgnoreCaseContains(String roupa);
 
+    List<Produto> findByPrecoLessThan(Double value);
+
     List<Produto> findByOrderByPreco();
 
     List<Produto> findByOrderByPrecoDesc();
@@ -47,4 +49,5 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
     List<Produto> searchProduct(@Param("tema") Optional<String> tema,
                                 @Param("personagem") Optional<String> personagem,
                                 @Param("peca") Optional<String> peca);
+
 }

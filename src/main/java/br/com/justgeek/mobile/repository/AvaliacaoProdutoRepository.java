@@ -8,4 +8,6 @@ import java.util.List;
 public interface AvaliacaoProdutoRepository extends JpaRepository<AvaliacaoProduto, Integer> {
 
     List<AvaliacaoProduto> findAllByFkProdutoIdProduto(int idProduto);
+
+    List<AvaliacaoProduto> findTop4ByOrderByNotaDesc();
 }

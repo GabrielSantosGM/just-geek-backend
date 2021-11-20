@@ -135,6 +135,17 @@ public class ProductController extends Authenticated {
         }
     }
 
+    @GetMapping("/best-rating")
+    public ResponseEntity<List<AvaliacaoProdutoMapper>> returnBestRating() {
+        try {
+            LOG.info("[AVALIACOES] Retornando as melhores avaliacoes dos produto.");
+            return ResponseEntity.status(HttpStatus.OK).body(productServices.retornarMelhoresAvaliacoes());
+        } catch (ProdutoException e) {
+            LOG.warn(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+    }
+
     @GetMapping("/rating/{idProduct}")
     public ResponseEntity<List<AvaliacaoProdutoMapper>> returnProductReviews(@PathVariable int idProduct) {
         try {

@@ -27,4 +27,6 @@ public interface ProdutoFiltroService {
     List<ProdutoMapper> retornarProdutosPrecoCrescente();
 
     List<ProdutoMapper> retornarProdutosPrecoDecrescente();
+
+    List<ProdutoMapper> retornarProdutosEmPromocao();
 }

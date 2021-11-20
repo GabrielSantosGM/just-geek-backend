@@ -15,4 +15,5 @@ public interface ProdutoService {
 
     List<AvaliacaoProdutoMapper> retornarAvaliacoesDoProduto(int idProduto);
 
+    List<AvaliacaoProdutoMapper> retornarMelhoresAvaliacoes();
 }
