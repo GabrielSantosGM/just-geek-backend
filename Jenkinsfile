@@ -22,13 +22,7 @@ pipeline {
 
         stage('Stop everything') {
             steps {
-                sh "docker system prune"
-            }
-        }
-
-        stage('Confirm') {
-            steps {
-                sh "y"
+                sh "docker system prune --all --volumes --force"
             }
         }
 
