@@ -1,6 +1,12 @@
 pipeline {
     agent any
     stages {
+        stage('Restart docker') {
+            steps {
+                sh "sudo systemctl restart docker"
+            }
+        }
+
         stage('Info') {
             steps {
                 sh "mvn -v"
@@ -13,14 +19,13 @@ pipeline {
             }
         }
 
-
         stage('Generate Package') {
             steps {
                 sh "mvn package"
             }
         }
 
-        stage('Stop everything') {
+        stage('Clean everything') {
             steps {
                 sh "docker system prune --all --volumes --force"
             }
