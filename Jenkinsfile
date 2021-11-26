@@ -23,7 +23,13 @@ pipeline {
         stage('Stop everything') {
             steps {
                 sh "docker system prune"
-                sh "yes"
+                sh "y"
+            }
+        }
+
+        stage('Confirm') {
+            steps {
+                sh "y"
             }
         }
 
@@ -49,7 +55,7 @@ pipeline {
 
         stage('Docker deploy'){
             steps {
-                sh 'docker run -itd -p  8081:8083 akinicchi/just-geek-backend:${BUILD_NUMBER}'
+                sh 'docker run -itd -p 8081:8083 akinicchi/just-geek-backend:${BUILD_NUMBER}'
             }
         }
 
