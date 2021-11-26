@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('Restart docker') {
             steps {
-                sh "sudo systemctl restart docker"
+                sh "sudo su -"
+                sh "systemctl restart docker"
             }
         }
 
