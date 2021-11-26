@@ -23,7 +23,7 @@ pipeline {
         stage('Stop everything') {
             steps {
                 sh "docker system prune"
-                sh "y"
+                sh "yes"
             }
         }
 
