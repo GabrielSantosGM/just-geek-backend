@@ -39,7 +39,7 @@ public class ProductImageController {
     }
 
     @GetMapping("/images/{idProduct}")
-    public ResponseEntity<List<String>> returnFirstImage(@PathVariable int idProduct) {
+    public ResponseEntity<List<String>> returnImages(@PathVariable int idProduct) {
         try {
             LOG.info("[IMAGEM DO PRODUTO] RETORNANDO IMAGENS!");
             return ResponseEntity.status(200).body(imagemProdutoService.retornarImagens(idProduct));

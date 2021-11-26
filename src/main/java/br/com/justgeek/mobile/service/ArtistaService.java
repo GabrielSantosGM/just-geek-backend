@@ -1,6 +1,7 @@
 package br.com.justgeek.mobile.service;
 
 import br.com.justgeek.mobile.entities.Artista;
+import br.com.justgeek.mobile.entities.ProgramasHabilidadesArtista;
 import br.com.justgeek.mobile.mapper.artista.ArtistaFavoritadoMapper;
 import br.com.justgeek.mobile.mapper.artista.ArtistaMapper;
 
@@ -12,7 +13,7 @@ public interface ArtistaService {
 
     ArtistaMapper retornarArtistaEspecifico(int idArtista);
 
-    List<Artista> retornarTodosOsArtistas();
+    List<ArtistaMapper> retornarTodosOsArtistas();
 
     List<ArtistaMapper> retornarArtistasSemelhantes(int idArtista);
 
@@ -21,4 +22,6 @@ public interface ArtistaService {
     void favoritarArtista(int idUsuario, int idArtista);
 
     void desfavoritarArtista(int idUsuario, int idArtistaFavoritado);
+
+    void cadastrarSkillPrograma(int idArtista, ProgramasHabilidadesArtista programasHabilidadesArtista);
 }

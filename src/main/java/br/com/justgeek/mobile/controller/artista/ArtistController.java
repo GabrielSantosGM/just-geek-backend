@@ -2,6 +2,7 @@ package br.com.justgeek.mobile.controller.artista;
 
 import br.com.justgeek.mobile.configs.Authenticated;
 import br.com.justgeek.mobile.dto.ArtistaDTO;
+import br.com.justgeek.mobile.dto.ProgramasHabilidadesDTO;
 import br.com.justgeek.mobile.entities.Artista;
 import br.com.justgeek.mobile.enums.respostas.requisicoes.RespostasRequisicoesUsuarioEnum;
 import br.com.justgeek.mobile.exceptions.ArtistaException;
@@ -25,19 +26,19 @@ public class ArtistController extends Authenticated {
 
     private static final Logger LOG = LoggerFactory.getLogger(ArtistController.class);
 
-    private final ArtistaServiceImpl artistaService;
+    private final ArtistaServiceImpl artistService;
 
     @Autowired
-    public ArtistController(UsuarioRepository usuarioRepository, ArtistaServiceImpl artistaService) {
+    public ArtistController(UsuarioRepository usuarioRepository, ArtistaServiceImpl artistService) {
         super(usuarioRepository);
-        this.artistaService = artistaService;
+        this.artistService = artistService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<Artista> registerArtist(@RequestBody ArtistaDTO artistaDTO) {
         try {
             LOG.info("[ARTISTA] Cadastrando novo artista.");
-            artistaService.cadastrar(artistaDTO.transformarParaEntidade());
+            artistService.cadastrar(artistaDTO.transformarParaEntidade());
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (ArtistaException e) {
             LOG.error(e.getMessage());
@@ -46,10 +47,10 @@ public class ArtistController extends Authenticated {
     }
 
     @GetMapping
-    public ResponseEntity<List<Artista>> returnsAllArtists() {
+    public ResponseEntity<List<ArtistaMapper>> returnsAllArtists() {
         try {
             LOG.info("[ARTISTA] Retornando todos os artistas.");
-            return ResponseEntity.status(HttpStatus.OK).body(artistaService.retornarTodosOsArtistas());
+            return ResponseEntity.status(HttpStatus.OK).body(artistService.retornarTodosOsArtistas());
         } catch (ArtistaException e) {
             LOG.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -60,7 +61,7 @@ public class ArtistController extends Authenticated {
     public ResponseEntity<List<ArtistaMapper>> returnsSimilarArtists(@PathVariable int idArtist) {
         try {
             LOG.info("[ARTISTA] Retornando todos os artistas semelhantes com o Artista de ID {}", idArtist);
-            return ResponseEntity.status(HttpStatus.OK).body(artistaService.retornarArtistasSemelhantes(idArtist));
+            return ResponseEntity.status(HttpStatus.OK).body(artistService.retornarArtistasSemelhantes(idArtist));
         } catch (ArtistaException e) {
             LOG.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -71,7 +72,7 @@ public class ArtistController extends Authenticated {
     public ResponseEntity<ArtistaMapper> returnSpecificArtist(@PathVariable int idArtist) {
         try {
             LOG.info("[ARTISTA] Retornando Artista de ID {}...", idArtist);
-            return ResponseEntity.status(HttpStatus.OK).body(artistaService.retornarArtistaEspecifico(idArtist));
+            return ResponseEntity.status(HttpStatus.OK).body(artistService.retornarArtistaEspecifico(idArtist));
         } catch (ProdutoException e) {
             LOG.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -82,7 +83,7 @@ public class ArtistController extends Authenticated {
     public ResponseEntity<List<ArtistaFavoritadoMapper>> returnsFavoriteArtists(@PathVariable int idUser) {
         try {
             LOG.info("[ARTISTA] Retornando artistas favoritados pelo usuário de ID {}", idUser);
-            return ResponseEntity.status(HttpStatus.OK).body(artistaService.artistasFavoritados(idUser));
+            return ResponseEntity.status(HttpStatus.OK).body(artistService.artistasFavoritados(idUser));
         } catch (ArtistaException e) {
             LOG.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -94,7 +95,7 @@ public class ArtistController extends Authenticated {
         if (authenticate(idUser)) {
             try {
                 LOG.info("[ARTISTA] Favoritando artista.");
-                artistaService.favoritarArtista(idUser, idArtist);
+                artistService.favoritarArtista(idUser, idArtist);
                 return ResponseEntity.status(HttpStatus.CREATED).build();
             } catch (ArtistaException e) {
                 LOG.warn(e.getMessage());
@@ -106,10 +107,22 @@ public class ArtistController extends Authenticated {
         }
     }
 
+    @PostMapping("/{idArtist}")
+    public ResponseEntity<String> registerSkill(@PathVariable int idArtist,
+                                                @RequestBody ProgramasHabilidadesDTO programasHabilidades) {
+        try {
+            artistService.cadastrarSkillPrograma(idArtist, programasHabilidades.dtoToEntity());
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (ArtistaException e) {
+            LOG.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
     @DeleteMapping("/disfavor/{idUser}/{idArtist}")
     public ResponseEntity<String> disfavorArtist(@PathVariable int idUser, @PathVariable int idArtist) {
         if (authenticate(idUser)) {
-            artistaService.desfavoritarArtista(idUser, idArtist);
+            artistService.desfavoritarArtista(idUser, idArtist);
             return ResponseEntity.status(HttpStatus.OK).build();
         } else {
             LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_AUTENTICACAO.getResposta(), idUser);

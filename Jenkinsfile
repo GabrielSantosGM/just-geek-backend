@@ -14,12 +14,18 @@ pipeline {
         }
 
 
-        stage('deploy') {
+        stage('Generate Package') {
             steps {
                 sh "mvn package"
             }
         }
 
+        stage('Stop everything') {
+            steps {
+                sh "docker system prune"
+                sh "s"
+            }
+        }
 
         stage('Build Docker image'){
             steps {

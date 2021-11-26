@@ -1,16 +1,16 @@
 package br.com.justgeek.mobile.service.impl.artista;
 
+import br.com.justgeek.mobile.dto.ProgramasHabilidadesDTO;
 import br.com.justgeek.mobile.entities.Artista;
 import br.com.justgeek.mobile.entities.ArtistaFavorito;
+import br.com.justgeek.mobile.entities.ProgramasHabilidadesArtista;
 import br.com.justgeek.mobile.entities.Usuario;
 import br.com.justgeek.mobile.enums.respostas.requisicoes.RespostasRequisicoesArtistaEnum;
 import br.com.justgeek.mobile.exceptions.ArtistaException;
 import br.com.justgeek.mobile.exceptions.ContaException;
 import br.com.justgeek.mobile.mapper.artista.ArtistaFavoritadoMapper;
 import br.com.justgeek.mobile.mapper.artista.ArtistaMapper;
-import br.com.justgeek.mobile.repository.ArtistaFavoritoRepository;
-import br.com.justgeek.mobile.repository.ArtistaRepository;
-import br.com.justgeek.mobile.repository.UsuarioRepository;
+import br.com.justgeek.mobile.repository.*;
 import br.com.justgeek.mobile.service.ArtistaService;
 import br.com.justgeek.mobile.utils.EntidadeParaMapperListaUtils;
 import org.slf4j.Logger;
@@ -29,13 +29,17 @@ public class ArtistaServiceImpl implements ArtistaService {
     private final ArtistaRepository artistaRepository;
     private final UsuarioRepository usuarioRepository;
     private final ArtistaFavoritoRepository artistaFavoritoRepository;
+    private final ProgramasHabilidadesArtistaRepository programasHabilidadesArtistaRepository;
 
     @Autowired
     public ArtistaServiceImpl(ArtistaRepository artistaRepository,
-                              UsuarioRepository usuarioRepository, ArtistaFavoritoRepository artistaFavoritoRepository) {
+                              UsuarioRepository usuarioRepository,
+                              ArtistaFavoritoRepository artistaFavoritoRepository,
+                              ProgramasHabilidadesArtistaRepository programasHabilidadesArtistaRepository) {
         this.artistaRepository = artistaRepository;
         this.usuarioRepository = usuarioRepository;
         this.artistaFavoritoRepository = artistaFavoritoRepository;
+        this.programasHabilidadesArtistaRepository = programasHabilidadesArtistaRepository;
     }
 
     @Override
@@ -65,13 +69,13 @@ public class ArtistaServiceImpl implements ArtistaService {
     }
 
     @Override
-    public List<Artista> retornarTodosOsArtistas() {
+    public List<ArtistaMapper> retornarTodosOsArtistas() {
         List<Artista> artistasParceiros = artistaRepository.findAll();
 
         if (artistasParceiros.isEmpty()) {
             throw new ArtistaException("[ARTISTA] Nenhum artista cadastrado.");
         } else {
-            return artistasParceiros;
+            return EntidadeParaMapperListaUtils.listaArtista(artistasParceiros);
         }
     }
 
@@ -122,6 +126,21 @@ public class ArtistaServiceImpl implements ArtistaService {
             throw new ArtistaException("[ARTISTA] Nenhum artista favoritado foi encontrado");
         } else {
             return EntidadeParaMapperListaUtils.listaArtistasFavoritados(artistasFavoritados);
+        }
+    }
+
+    @Override
+    public void cadastrarSkillPrograma(int idArtista, ProgramasHabilidadesArtista programasHabilidadesArtista) {
+        Artista artista = verificaArtista(idArtista);
+
+        try {
+            programasHabilidadesArtistaRepository.save(ProgramasHabilidadesDTO.getInstance(
+                    programasHabilidadesArtista.getHabilidade(),
+                    programasHabilidadesArtista.getPrograma(),
+                    artista).dtoToEntity());
+        } catch (ArtistaException e) {
+            LOG.error(e.getMessage());
+            throw new ArtistaException("Erro ao cadastrar habilidade do artista.");
         }
     }
 

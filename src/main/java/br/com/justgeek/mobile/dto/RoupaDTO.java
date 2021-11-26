@@ -1,24 +1,19 @@
 package br.com.justgeek.mobile.dto;
 
 import br.com.justgeek.mobile.entities.Roupa;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class RoupaDTO {
 
     private String modelo;
     private String material;
     private String especificacoes;
 
-    private RoupaDTO() {
-    }
-
     private RoupaDTO(Roupa roupa) {
         this.modelo = roupa.getModelo();
         this.material = roupa.getMaterial();
         this.especificacoes = roupa.getEspecificacoes();
-    }
-
-    public static RoupaDTO create(Roupa roupa){
-        return new RoupaDTO(roupa);
     }
 
     public Roupa gerar(){

@@ -2,6 +2,7 @@ package br.com.justgeek.mobile.mapper.artista;
 
 import br.com.justgeek.mobile.entities.Artista;
 import br.com.justgeek.mobile.entities.ProgramasHabilidadesArtista;
+import br.com.justgeek.mobile.entities.UploadArtista;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +15,10 @@ public class ArtistaMapper {
     private final String apelido;
     private final String biografia;
     private final String contato;
+    private final String redeSocial1;
+    private final String redeSocial2;
+    private final String categoria;
+    private final List<String> artes;
     private final List<String> skills;
     private final List<String> programas;
 
@@ -24,6 +29,10 @@ public class ArtistaMapper {
         this.apelido = artista.getApelido();
         this.biografia = artista.getBiografia();
         this.contato = artista.getContato();
+        this.redeSocial1 = artista.getRedeSocial1();
+        this.redeSocial2 = artista.getRedeSocial2();
+        this.categoria = artista.getCategoria();
+        this.artes = artista.getUploads().stream().map(UploadArtista::getImagem).collect(Collectors.toList());
         this.skills = artista.getProgramasHabilidadesArtistas().stream().map(ProgramasHabilidadesArtista::getHabilidade).collect(Collectors.toList());
         this.programas = artista.getProgramasHabilidadesArtistas().stream().map(ProgramasHabilidadesArtista::getPrograma).collect(Collectors.toList());
     }
@@ -54,6 +63,22 @@ public class ArtistaMapper {
 
     public String getContato() {
         return contato;
+    }
+
+    public String getRedeSocial1() {
+        return redeSocial1;
+    }
+
+    public String getRedeSocial2() {
+        return redeSocial2;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public List<String> getArtes() {
+        return artes;
     }
 
     public List<String> getSkills() {

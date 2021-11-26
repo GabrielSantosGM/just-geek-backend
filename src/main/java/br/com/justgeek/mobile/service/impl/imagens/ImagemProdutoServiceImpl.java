@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ImagemProdutoServiceImpl implements ImagemProdutoService {
@@ -38,7 +37,7 @@ public class ImagemProdutoServiceImpl implements ImagemProdutoService {
         if (imagens.isEmpty()) {
             throw new NullPointerException("NENHUMA IMAGEM FOI ENCONTRADA!");
         }
-        return ImagensUtils.retornaImagens(imagens);
+        return ImagensUtils.retornaImagensProduto(imagens);
     }
 
     @Override
@@ -79,7 +78,6 @@ public class ImagemProdutoServiceImpl implements ImagemProdutoService {
                 LOG.warn("[Imagem] O indíce [ {} ] aponta que está nulo o campo.", i);
             }
         }
-
         return imagens;
     }
 }
