@@ -1,13 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Restart docker') {
-            steps {
-                sh "sudo su -"
-                sh "systemctl restart docker"
-            }
-        }
-
         stage('Info') {
             steps {
                 sh "mvn -v"
