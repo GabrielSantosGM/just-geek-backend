@@ -19,12 +19,6 @@ pipeline {
             }
         }
 
-        stage('Clean everything') {
-            steps {
-                sh "docker system prune --all --volumes --force"
-            }
-        }
-
         stage('Build Docker image'){
             steps {
                 sh 'docker build -t akinicchi/just-geek-backend:${BUILD_NUMBER} .'
@@ -49,6 +43,12 @@ pipeline {
             steps {
                 sh "docker stop just_geek"
                 sh "docker rm just_geek"
+            }
+        }
+
+        stage('Clean everything') {
+            steps {
+                sh "docker system prune --all --volumes --force"
             }
         }
 
