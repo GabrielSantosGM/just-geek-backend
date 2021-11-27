@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Info') {
+        stage('Info Maven') {
             steps {
                 sh "mvn -v"
             }
@@ -33,7 +33,7 @@ pipeline {
 
         stage('Docker Login'){
             steps {
-                 withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
+                withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
                     sh "docker login -u akinicchi -p ${Dockerpwd}"
                 }
             }
@@ -45,12 +45,18 @@ pipeline {
             }
         }
 
-        stage('Docker deploy'){
+        stage('Stop container in use'){
             steps {
-                sh 'docker run -itd -p 8081:8083 akinicchi/just-geek-backend:${BUILD_NUMBER}'
+                sh "docker stop just_geek"
+                sh "docker rm just_geek"
             }
         }
 
+        stage('Docker deploy'){
+            steps {
+                sh "docker run -itd -p 80:8083 --name just_geek akinicchi/just-geek-backend:${BUILD_NUMBER}"
+            }
+        }
 
         stage('Archving') {
             steps {
