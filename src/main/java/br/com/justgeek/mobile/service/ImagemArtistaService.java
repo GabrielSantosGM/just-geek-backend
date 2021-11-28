@@ -6,5 +6,7 @@ public interface ImagemArtistaService {
 
     List<String> retornarImagensArtista(int idArtista);
 
-    List<String> uploadImagemArtista(int idProduto, String imagem1, String imagem2, String imagem3);
+    List<String> uploadImagemArtista(int idArtista, String imagem1, String imagem2, String imagem3);
+
+    String retornarImagemPerfil(int idArtista);
 }

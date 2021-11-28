@@ -13,23 +13,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/upload-artist")
-public class UploadArtistController {
+@RequestMapping("/artist-image")
+public class ArtistImageController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UploadArtistController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ArtistImageController.class);
 
     private final ImagemArtistaService imagemArtistaService;
 
     @Autowired
-    public UploadArtistController(ImagemArtistaServiceImpl imagemArtistaService) {
+    public ArtistImageController(ImagemArtistaServiceImpl imagemArtistaService) {
         this.imagemArtistaService = imagemArtistaService;
     }
 
     @PostMapping("/{idArtist}")
-    public ResponseEntity<List<String>> uploadImagemProduto(@PathVariable int idArtist,
-                                                            @RequestParam String image1,
-                                                            @RequestParam String image2,
-                                                            @RequestParam String image3) {
+    public ResponseEntity<List<String>> uploadImageArtist(@PathVariable int idArtist,
+                                                          @RequestParam String image1,
+                                                          @RequestParam String image2,
+                                                          @RequestParam String image3) {
         try {
             imagemArtistaService.uploadImagemArtista(idArtist, image1, image2, image3);
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -39,10 +39,21 @@ public class UploadArtistController {
         }
     }
 
+    @GetMapping("/perfil/{idArtist}")
+    public ResponseEntity<String> returnImagePerfil(@PathVariable int idArtist) {
+        try {
+            LOG.info("[IMAGEM DO ARTISTA] RETORNANDO IMAGEM DE PERFIL DO ARTISTA!");
+            return ResponseEntity.status(HttpStatus.OK).body(imagemArtistaService.retornarImagemPerfil(idArtist));
+        } catch (NullPointerException e) {
+            LOG.warn(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
     @GetMapping("/images/{idArtist}")
     public ResponseEntity<List<String>> returnImages(@PathVariable int idArtist) {
         try {
-            LOG.info("[IMAGEM DO ARTISTA] RETORNANDO IMAGENS!");
+            LOG.info("[IMAGEM DO ARTISTA] RETORNANDO IMAGENS DO ARTISTA!");
             return ResponseEntity.status(200).body(imagemArtistaService.retornarImagensArtista(idArtist));
         } catch (NullPointerException e) {
             LOG.warn(e.getMessage());

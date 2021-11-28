@@ -18,13 +18,13 @@ public class ArtistaMapper {
     private final String redeSocial1;
     private final String redeSocial2;
     private final String categoria;
-    private final List<String> artes;
+    private final String artes;
     private final List<String> skills;
     private final List<String> programas;
 
     private ArtistaMapper(Artista artista) {
         this.idArtista = artista.getIdArtista();
-        this.imagemPerfil = "/perfil/" + idArtista;
+        this.imagemPerfil = "/artist-image/perfil/" + idArtista;
         this.nome = artista.getNomeCompleto();
         this.apelido = artista.getApelido();
         this.biografia = artista.getBiografia();
@@ -32,7 +32,7 @@ public class ArtistaMapper {
         this.redeSocial1 = artista.getRedeSocial1();
         this.redeSocial2 = artista.getRedeSocial2();
         this.categoria = artista.getCategoria();
-        this.artes = artista.getUploads().stream().map(UploadArtista::getImagem).collect(Collectors.toList());
+        this.artes = "/artist-image/images/" + artista.getIdArtista();
         this.skills = artista.getProgramasHabilidadesArtistas().stream().map(ProgramasHabilidadesArtista::getHabilidade).collect(Collectors.toList());
         this.programas = artista.getProgramasHabilidadesArtistas().stream().map(ProgramasHabilidadesArtista::getPrograma).collect(Collectors.toList());
     }
@@ -77,7 +77,7 @@ public class ArtistaMapper {
         return categoria;
     }
 
-    public List<String> getArtes() {
+    public String getArtes() {
         return artes;
     }
 

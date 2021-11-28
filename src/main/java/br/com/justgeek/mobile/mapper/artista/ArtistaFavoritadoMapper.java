@@ -11,7 +11,7 @@ public class ArtistaFavoritadoMapper {
     public ArtistaFavoritadoMapper(ArtistaFavorito artista) {
         this.idArtista = artista.getFkArtista().getIdArtista();
         this.nome = artista.getFkArtista().getNomeCompleto();
-        this.imagemPerfil = "/perfil/" + idArtista;
+        this.imagemPerfil = "/artist-image/perfil/" + idArtista;
     }
 
     public static ArtistaFavoritadoMapper transformar(ArtistaFavorito artista) {
