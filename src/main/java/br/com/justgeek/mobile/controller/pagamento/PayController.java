@@ -19,11 +19,11 @@ public class PayController {
     @Autowired
     private MercadoPagoServiceImpl mercadoPagoService;
 
-    @PostMapping("/{idUsuario}")
-    public ResponseEntity<MercadoPagoPreferenceDTO> pay(@PathVariable int idUsuario) {
+    @PostMapping("/{idUser}/{shippingCost}")
+    public ResponseEntity<MercadoPagoPreferenceDTO> pay(@PathVariable int idUser, @PathVariable Double shippingCost) {
         try {
             LOG.info("FINALIZANDO COMPRA");
-            return ResponseEntity.status(201).body(mercadoPagoService.finalizarCompra(idUsuario).retornarPreferenceMP());
+            return ResponseEntity.status(201).body(mercadoPagoService.finalizarCompra(idUser, shippingCost).retornarPreferenceMP());
         } catch (CompraException e) {
             LOG.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

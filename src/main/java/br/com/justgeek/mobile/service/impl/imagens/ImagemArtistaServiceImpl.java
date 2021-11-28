@@ -49,7 +49,7 @@ public class ImagemArtistaServiceImpl implements ImagemArtistaService {
     public String retornarImagemPerfil(int idArtista) {
         return imagemArtistaRepository.findByFkArtistaIdArtistaOrderByIdImagemDesc(idArtista)
                 .orElseThrow(() -> {
-                    throw new NullPointerException("Nenhuma imagem do Artista de ID" + idArtista + " foi recuperada.");
+                    throw new NullPointerException("Nenhuma imagem do Artista de ID " + idArtista + " foi recuperada.");
                 }).getImagem();
     }
 

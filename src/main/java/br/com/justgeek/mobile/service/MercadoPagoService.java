@@ -5,7 +5,7 @@ import br.com.justgeek.mobile.service.impl.mercado.pago.MercadoPagoServiceImpl;
 
 public interface MercadoPagoService {
 
-    MercadoPagoServiceImpl finalizarCompra(int idUsuario);
+    MercadoPagoServiceImpl finalizarCompra(int idUsuario, Double valorFrete);
 
     MercadoPagoPreferenceDTO retornarPreferenceMP();
 }

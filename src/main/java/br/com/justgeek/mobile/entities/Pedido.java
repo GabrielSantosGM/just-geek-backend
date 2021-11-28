@@ -31,12 +31,6 @@ public class Pedido {
     @JoinColumn(name = "fk_usuario_pedido")
     private Usuario fkUsuario;
 
-    public Pedido() {
-        this.codCompra = "PD#00" + ThreadLocalRandom.current().nextInt(1,100);
-        this.situacao = "Em faturamento";
-        this.dataHora = LocalDateTime.now();
-    }
-
     public Integer getIdPedido() {
         return idPedido;
     }
