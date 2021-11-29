@@ -32,6 +32,8 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
     List<Produto> findByItensComprasFkCarrinhoFkUsuarioIdUsuarioAndItensComprasStatusTrueAndItensComprasFkCarrinhoFinalizadoFalse(int idUsuario);
 
+    List<Produto> findByItensComprasFkCarrinhoFkUsuarioIdUsuarioAndItensComprasFkCarrinhoFkPedidoIdPedido(int idUsuario, int idPedido);
+
     @Query("select p from Usuario u inner join Pedido p on u.idUsuario = p.fkUsuario inner join Carrinho c on " +
            "c.fkPedido = p.idPedido inner join ItemCompra it on it.fkCarrinho = c.idCarrinho inner join Produto pr on " +
             " it.fkProduto = pr.idProduto where u.idUsuario like ?1 and it.status = true and c.finalizado = false")

@@ -30,7 +30,7 @@ public class Carrinho {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime dataHora;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "fk_pedido")
     private Pedido fkPedido;
 

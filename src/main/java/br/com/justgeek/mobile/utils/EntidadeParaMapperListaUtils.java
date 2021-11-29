@@ -3,10 +3,7 @@ package br.com.justgeek.mobile.utils;
 import br.com.justgeek.mobile.entities.*;
 import br.com.justgeek.mobile.mapper.artista.ArtistaFavoritadoMapper;
 import br.com.justgeek.mobile.mapper.artista.ArtistaMapper;
-import br.com.justgeek.mobile.mapper.produto.ProdutoCarrinhoMapper;
-import br.com.justgeek.mobile.mapper.produto.ProdutoFavoritoMapper;
-import br.com.justgeek.mobile.mapper.produto.AvaliacaoProdutoMapper;
-import br.com.justgeek.mobile.mapper.produto.ProdutoMapper;
+import br.com.justgeek.mobile.mapper.produto.*;
 import br.com.justgeek.mobile.service.impl.produto.QuantityProductServiceImpl;
 
 import java.util.ArrayList;
@@ -25,10 +22,17 @@ public class EntidadeParaMapperListaUtils {
         return produtosRetornados;
     }
 
-    public static List<ProdutoCarrinhoMapper> listaProdutosNoCarrinho(Integer idUsuario, List<Produto> produtos, QuantityProductServiceImpl quantityProductService) {
+    public static List<ProdutoCarrinhoMapper> listaProdutosNoCarrinho(int idUsuario, List<Produto> produtos, QuantityProductServiceImpl quantityProductService) {
         List<ProdutoCarrinhoMapper> produtosRetornados = new ArrayList<>();
 
         produtos.forEach(produto -> produtosRetornados.add(ProdutoCarrinhoMapper.gerar(idUsuario, produto, quantityProductService)));
+        return produtosRetornados;
+    }
+
+    public static List<ProdutoPedidoMapper> listaProdutosDoPedido(int idUsuario, List<Produto> produtos, QuantityProductServiceImpl quantityProductService) {
+        List<ProdutoPedidoMapper> produtosRetornados = new ArrayList<>();
+
+        produtos.forEach(produto -> produtosRetornados.add(ProdutoPedidoMapper.gerar(idUsuario, produto, quantityProductService)));
         return produtosRetornados;
     }
 

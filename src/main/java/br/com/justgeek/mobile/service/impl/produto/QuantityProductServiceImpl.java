@@ -16,6 +16,15 @@ public class QuantityProductServiceImpl {
         this.itemCompraRepository = itemCompraRepository;
     }
 
+    public Integer retornaQuantidadeDoProdutoAposFinalizadaACompra(int idUsuario, int idProduto) {
+        Optional<ItemCompra> itemCompra = itemCompraRepository.findByFkCarrinhoFkUsuarioIdUsuarioAndFkProdutoIdProdutoAndFkCarrinhoFinalizadoTrueAndStatusTrueAndFkCarrinhoFkPedidoFkUsuarioIdUsuario(idUsuario, idProduto, idUsuario);
+        if (itemCompra.isPresent()) {
+            return itemCompra.get().getQuantidade();
+        } else {
+            throw new CarrinhoException("[CARRINHO] Falha ao recuperar a quantidade de itens do produto.");
+        }
+    }
+
     public Integer retornaQuantidadeDoProduto(int idUsuario, int idProduto) {
         Optional<ItemCompra> itemCompra = itemCompraRepository.findByFkCarrinhoFkUsuarioIdUsuarioAndFkProdutoIdProdutoAndFkCarrinhoFinalizadoFalseAndStatusTrue(idUsuario, idProduto);
         if (itemCompra.isPresent()) {

@@ -20,16 +20,16 @@ public class Roupa {
     private String modelo;
 
     @NotBlank
+    @Column(name = "cor")
+    private String cor;
+
+    @NotBlank
     @Column(name = "material")
     private String material;
 
     @NotBlank
     @Column(name = "especificacoes")
     private String especificacoes;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "fkRoupa")
-    private List<TamanhoRoupa> tamanhos;
 
     public Integer getIdRoupa() {
         return idRoupa;
@@ -47,6 +47,14 @@ public class Roupa {
         this.modelo = modelo;
     }
 
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
     public String getMaterial() {
         return material;
     }
@@ -61,13 +69,5 @@ public class Roupa {
 
     public void setEspecificacoes(String especificacoes) {
         this.especificacoes = especificacoes;
-    }
-
-    public List<TamanhoRoupa> getTamanhos() {
-        return tamanhos;
-    }
-
-    public void setTamanhos(List<TamanhoRoupa> tamanhos) {
-        this.tamanhos = tamanhos;
     }
 }
