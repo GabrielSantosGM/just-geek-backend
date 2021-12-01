@@ -7,6 +7,7 @@ import br.com.justgeek.mobile.entities.Pedido;
 import br.com.justgeek.mobile.entities.Usuario;
 import br.com.justgeek.mobile.exceptions.CarrinhoException;
 import br.com.justgeek.mobile.repository.CarrinhoRepository;
+import br.com.justgeek.mobile.repository.CupomDeDescontoRepository;
 import br.com.justgeek.mobile.repository.PedidoRepository;
 import br.com.justgeek.mobile.repository.UsuarioRepository;
 import br.com.justgeek.mobile.service.MercadoPagoService;
@@ -21,7 +22,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class MercadoPagoServiceImpl implements MercadoPagoService {
@@ -33,16 +38,21 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
     private final PedidoRepository pedidoRepository;
     private final CarrinhoRepository carrinhoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final CupomDeDescontoRepository cupomDeDescontoRepository;
+    private final DecimalFormat format;
 
     private Preference preferencia = null;
 
     @Autowired
     public MercadoPagoServiceImpl(CarrinhoRepository carrinhoRepository,
                                   PedidoRepository pedidoRepository,
-                                  UsuarioRepository usuarioRepository) {
+                                  UsuarioRepository usuarioRepository,
+                                  CupomDeDescontoRepository cupomDeDescontoRepository) {
         this.pedidoRepository = pedidoRepository;
         this.carrinhoRepository = carrinhoRepository;
         this.usuarioRepository = usuarioRepository;
+        this.cupomDeDescontoRepository = cupomDeDescontoRepository;
+        this.format = new DecimalFormat();
     }
 
     public void setarToken() {
@@ -81,13 +91,23 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
     }
 
     @Override
-    public MercadoPagoServiceImpl finalizarCompra(int idUsuario, Double valorFrete) {
+    public MercadoPagoServiceImpl finalizarCompra(int idUsuario, Double valorFrete, Optional<String> cupom) {
 
         LOG.info("VERIFICANDO O CARRINHO");
         Carrinho carrinhoVerificado = verificarCarrinho(idUsuario);
-        carrinhoVerificado.setValorTotal(carrinhoVerificado.getValorTotal() + valorFrete);
-        carrinhoVerificado.setFinalizado(true);
 
+        LOG.info("VALOR INICIAL: {}", carrinhoVerificado.getValorTotal());
+        LOG.info("VERIFICANDO O CUPOM : [ {} ]", cupom.get());
+
+        if (!cupom.get().isEmpty()) {
+            Double porcentagemDesconto = ((carrinhoVerificado.getValorTotal() + valorFrete) * validaCupom(cupom.get())) / 100;
+            String valorFormatado = format.format(carrinhoVerificado.getValorTotal() - porcentagemDesconto).replace(",",".");
+            carrinhoVerificado.setValorTotal(Double.parseDouble(valorFormatado));
+        } else{
+            carrinhoVerificado.setValorTotal(carrinhoVerificado.getValorTotal() + valorFrete);
+        }
+        carrinhoVerificado.setFinalizado(true);
+        LOG.info("VALOR PÓS OPERACAO: {}", carrinhoVerificado.getValorTotal());
         LOG.info("INSERINDO TOKEN DE ACESSO");
         setarToken();
 
@@ -114,6 +134,14 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
         return pedidoRepository.save(pedido);
     }
 
+    private Integer validaCupom(String cupom) {
+        return cupomDeDescontoRepository
+                .findByNomeCupomAndDataInicioVigenciaLessThanAndDataFimVigenciaGreaterThan(cupom, LocalDate.now(), LocalDate.now())
+                .orElseThrow(() -> {
+                    throw new NoSuchElementException("NAO FOI ENCONTRADO CUPOM COM ESSE NOME!");
+                }).getPorcentagemDesconto();
+    }
+
     @Override
     public MercadoPagoPreferenceDTO retornarPreferenceMP() {
         return new MercadoPagoPreferenceDTO(preferencia);
@@ -128,7 +156,7 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
     public Carrinho verificarCarrinho(int idUsuario) {
         return carrinhoRepository.findByFinalizadoFalseAndFkUsuarioIdUsuario(idUsuario).
                 orElseThrow(() -> {
-                    throw new CarrinhoException("[VERIFICAÇÃO CARRINHO] FALHA AO RECUPERAR O CARRINHO DE ID " + idUsuario);
+                    throw new CarrinhoException("[VERIFICAÇÃO CARRINHO] FALHA AO RECUPERAR O CARRINHO DO USUARIO DE ID " + idUsuario);
                 });
     }
 }

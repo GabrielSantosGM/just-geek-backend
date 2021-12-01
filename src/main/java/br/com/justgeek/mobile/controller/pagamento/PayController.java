@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/payment")
 public class PayController {
@@ -19,14 +22,19 @@ public class PayController {
     @Autowired
     private MercadoPagoServiceImpl mercadoPagoService;
 
-    @PostMapping("/{idUser}/{shippingCost}")
-    public ResponseEntity<MercadoPagoPreferenceDTO> pay(@PathVariable int idUser, @PathVariable Double shippingCost) {
+    @PostMapping("/{idUser}/{shippingCost}/")
+    public ResponseEntity<MercadoPagoPreferenceDTO> pay(@PathVariable int idUser,
+                                                        @PathVariable Double shippingCost,
+                                                        @RequestParam Optional<String> coupon) {
         try {
             LOG.info("FINALIZANDO COMPRA");
-            return ResponseEntity.status(201).body(mercadoPagoService.finalizarCompra(idUser, shippingCost).retornarPreferenceMP());
+            return ResponseEntity.status(201).body(mercadoPagoService.finalizarCompra(idUser, shippingCost, coupon).retornarPreferenceMP());
         } catch (CompraException e) {
             LOG.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (NoSuchElementException e) {
+            LOG.warn(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }

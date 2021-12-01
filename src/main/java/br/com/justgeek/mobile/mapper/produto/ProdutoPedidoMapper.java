@@ -21,7 +21,7 @@ public class ProdutoPedidoMapper {
                 produto.getPersonagem();
         this.cor = produto.getFkRoupa().getCor();
         this.preco = produto.getPreco();
-        this.quantidade = quantityProductService.retornaQuantidadeDoProdutoAposFinalizadaACompra(idUsuario, idProduto);
+//        this.quantidade = quantityProductService.retornaQuantidadeDoProdutoAposFinalizadaACompra(idUsuario, idProduto);
         this.imagem = produto.getImagens().get(0).getImagem();
     }
 
