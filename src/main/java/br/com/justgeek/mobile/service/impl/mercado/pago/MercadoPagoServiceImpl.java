@@ -96,20 +96,18 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
         LOG.info("VERIFICANDO O CARRINHO");
         Carrinho carrinhoVerificado = verificarCarrinho(idUsuario);
 
-        LOG.info("VALOR INICIAL: {}", carrinhoVerificado.getValorTotal());
         LOG.info("VERIFICANDO O CUPOM : [ {} ]", cupom.get());
-
         if (!cupom.get().isEmpty()) {
+            LOG.info("EXECUTANDO OPERACAO DE CALCULO DA COMPRA COM O CUPOM [ {} ]", cupom.get());
             Double porcentagemDesconto = ((carrinhoVerificado.getValorTotal() + valorFrete) * validaCupom(cupom.get())) / 100;
-            LOG.info("VALOR COM DESCONTO {}", porcentagemDesconto);
             String valorFormatado = formatadorDecimal.format((carrinhoVerificado.getValorTotal() + valorFrete) - porcentagemDesconto).replace(",",".");
-            LOG.info("VALOR FORMATADO {}", valorFormatado);
             carrinhoVerificado.setValorTotal(Double.parseDouble(valorFormatado));
         } else{
+            LOG.info("EXECUTANDO OPERACAO DE CALCULO DA COMPRA SEM O CUPOM");
             carrinhoVerificado.setValorTotal(carrinhoVerificado.getValorTotal() + valorFrete);
         }
         carrinhoVerificado.setFinalizado(true);
-        LOG.info("VALOR PÓS OPERACAO: {}", carrinhoVerificado.getValorTotal());
+
         LOG.info("INSERINDO TOKEN DE ACESSO");
         setarToken();
 
