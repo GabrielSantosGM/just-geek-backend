@@ -39,7 +39,7 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
     private final CarrinhoRepository carrinhoRepository;
     private final UsuarioRepository usuarioRepository;
     private final CupomDeDescontoRepository cupomDeDescontoRepository;
-    private final DecimalFormat format;
+    private final DecimalFormat formatadorDecimal;
 
     private Preference preferencia = null;
 
@@ -52,7 +52,7 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
         this.carrinhoRepository = carrinhoRepository;
         this.usuarioRepository = usuarioRepository;
         this.cupomDeDescontoRepository = cupomDeDescontoRepository;
-        this.format = new DecimalFormat();
+        this.formatadorDecimal = new DecimalFormat("#.00");
     }
 
     public void setarToken() {
@@ -101,7 +101,9 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
 
         if (!cupom.get().isEmpty()) {
             Double porcentagemDesconto = ((carrinhoVerificado.getValorTotal() + valorFrete) * validaCupom(cupom.get())) / 100;
-            String valorFormatado = format.format(carrinhoVerificado.getValorTotal() - porcentagemDesconto).replace(",",".");
+            LOG.info("VALOR COM DESCONTO {}", porcentagemDesconto);
+            String valorFormatado = formatadorDecimal.format((carrinhoVerificado.getValorTotal() + valorFrete) - porcentagemDesconto).replace(",",".");
+            LOG.info("VALOR FORMATADO {}", valorFormatado);
             carrinhoVerificado.setValorTotal(Double.parseDouble(valorFormatado));
         } else{
             carrinhoVerificado.setValorTotal(carrinhoVerificado.getValorTotal() + valorFrete);
@@ -138,7 +140,7 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
         return cupomDeDescontoRepository
                 .findByNomeCupomAndDataInicioVigenciaLessThanAndDataFimVigenciaGreaterThan(cupom, LocalDate.now(), LocalDate.now())
                 .orElseThrow(() -> {
-                    throw new NoSuchElementException("NAO FOI ENCONTRADO CUPOM COM ESSE NOME!");
+                    throw new NoSuchElementException("NAO FOI ENCONTRADO CUPOM COM ESSE NOME OU ESTA FORA DA DATA DE VALIDADE!");
                 }).getPorcentagemDesconto();
     }
 
