@@ -3,10 +3,13 @@ package br.com.justgeek.mobile.service;
 import br.com.justgeek.mobile.mapper.produto.ProdutoMapper;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProdutoFiltroService {
 
     ProdutoMapper retornarProdutoEspecifico(int idProduto);
+
+    List<ProdutoMapper> retornarProdutosPesquisados(Optional<String> pesquisa);
 
     List<ProdutoMapper> retornarProdutosSemelhantes(int idProduto);
 

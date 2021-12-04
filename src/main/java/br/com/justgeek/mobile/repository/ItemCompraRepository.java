@@ -10,6 +10,8 @@ public interface ItemCompraRepository extends JpaRepository<ItemCompra, Integer>
 
     Optional<ItemCompra> findByIdItem(int idItem);
 
+    Optional<ItemCompra> findByTamanhoAndFkCarrinhoFkUsuarioIdUsuarioAndFkProdutoIdProdutoAndFkCarrinhoFinalizadoFalseAndStatusTrue(String tamanho, int idUsuario, int idProduto);
+
     Optional<ItemCompra> findByFkCarrinhoFkUsuarioIdUsuarioAndFkProdutoIdProdutoAndFkCarrinhoFinalizadoFalseAndStatusTrue(int idUsuario, int idProduto);
 
     Optional<ItemCompra> findByStatusTrueAndFkCarrinhoFkUsuarioIdUsuarioAndFkProdutoIdProdutoAndFkCarrinhoFinalizadoTrueAndFkCarrinhoFkPedidoFkUsuarioIdUsuario(int idUsuario, int idProduto, int idUsuario2);

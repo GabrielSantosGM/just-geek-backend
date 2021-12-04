@@ -22,6 +22,10 @@ public class ItemCompra {
     private Carrinho fkCarrinho;
 
     @NotNull
+    @Column(name = "tamanho")
+    private String tamanho;
+
+    @NotNull
     @Column(name = "quantidade")
     private Integer quantidade;
 
@@ -61,6 +65,14 @@ public class ItemCompra {
 
     public void setFkCarrinho(Carrinho fkCarrinho) {
         this.fkCarrinho = fkCarrinho;
+    }
+
+    public String getTamanho() {
+        return tamanho;
+    }
+
+    public void setTamanho(String tamanho) {
+        this.tamanho = tamanho;
     }
 
     public Integer getQuantidade() {

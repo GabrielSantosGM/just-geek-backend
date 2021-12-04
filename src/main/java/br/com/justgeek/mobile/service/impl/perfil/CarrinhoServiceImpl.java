@@ -13,7 +13,7 @@ import br.com.justgeek.mobile.repository.ItemCompraRepository;
 import br.com.justgeek.mobile.repository.ProdutoRepository;
 import br.com.justgeek.mobile.repository.UsuarioRepository;
 import br.com.justgeek.mobile.service.CarrinhoService;
-import br.com.justgeek.mobile.service.impl.produto.QuantityProductServiceImpl;
+import br.com.justgeek.mobile.service.impl.produto.QuantidadeETamanhoProdutoImpl;
 import br.com.justgeek.mobile.utils.EntidadeParaMapperListaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,12 +50,12 @@ public class CarrinhoServiceImpl implements CarrinhoService {
         if (produtos.isEmpty()) {
             throw new CarrinhoException("[CARRINHO] Não foram encontrados produtos no carrinho.");
         } else {
-            return EntidadeParaMapperListaUtils.listaProdutosNoCarrinho(idUsuario, produtos, new QuantityProductServiceImpl(itemCompraRepository));
+            return EntidadeParaMapperListaUtils.listaProdutosNoCarrinho(idUsuario, produtos, new QuantidadeETamanhoProdutoImpl(itemCompraRepository));
         }
     }
 
     @Override
-    public void deletarProduto(int idUsuario, int idProduto, int quantidade) {
+    public void deletarProduto(int idUsuario, int idProduto, int quantidade, String tamanho) {
         Carrinho carrinho = new Carrinho();
         ItemCompra itemComprado = new ItemCompra();
 
@@ -69,7 +69,7 @@ public class CarrinhoServiceImpl implements CarrinhoService {
         Carrinho carrinhoVerificado = verificaCarrinho(idUsuario);
 
         LOG.info("Verificando item comprado.");
-        Optional<ItemCompra> itemJaExistente = itemCompraRepository.findByFkCarrinhoFkUsuarioIdUsuarioAndFkProdutoIdProdutoAndFkCarrinhoFinalizadoFalseAndStatusTrue(idUsuario, idProduto);
+        Optional<ItemCompra> itemJaExistente = itemCompraRepository.findByTamanhoAndFkCarrinhoFkUsuarioIdUsuarioAndFkProdutoIdProdutoAndFkCarrinhoFinalizadoFalseAndStatusTrue(tamanho, idUsuario, idProduto);
 
         try {
             if (itemJaExistente.isPresent()) {

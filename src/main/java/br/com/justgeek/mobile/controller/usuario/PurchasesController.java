@@ -45,13 +45,14 @@ public class PurchasesController extends Authenticated {
         }
     }
 
-    @DeleteMapping("/{idUser}/{idProduct}/{quantidade}")
+    @DeleteMapping("/{idUser}/{idProduct}/{quantidade}/{tamanho}")
     public ResponseEntity<String> deleteProductCart(@PathVariable int idUser,
                                                     @PathVariable int idProduct,
-                                                    @PathVariable int quantidade){
+                                                    @PathVariable int quantidade,
+                                                    @PathVariable String tamanho){
         if (authenticate(idUser)) {
             try {
-                carrinhoService.deletarProduto(idUser, idProduct, quantidade);
+                carrinhoService.deletarProduto(idUser, idProduct, quantidade, tamanho);
                 return ResponseEntity.status(HttpStatus.OK).build();
             } catch (CarrinhoException e) {
                 LOG.warn(e.getMessage());

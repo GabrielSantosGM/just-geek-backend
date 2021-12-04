@@ -11,34 +11,40 @@ public class CompraDTO {
     private String nomeComprador;
     private String protocoloPedido;
     private Double valorTotal;
+    private Double valorProdutos;
+    private Double valorCupom;
+    private Double valorFrete;
 
-    public CompraDTO(Carrinho carrinho) {
+    public CompraDTO(Carrinho carrinho, Double valorProdutos, Double valorCupom, Double valorFrete) {
         this.nomeComprador = carrinho.getFkUsuario().getNome() + " " + carrinho.getFkUsuario().getSobrenome();
         this.protocoloPedido = "CMP-JG#" + ThreadLocalRandom.current().nextInt(1,1000);
         this.valorTotal = carrinho.getValorTotal();
+        this.valorProdutos = valorProdutos;
+        this.valorCupom = valorCupom;
+        this.valorFrete = valorFrete;
     }
 
     public String getNomeComprador() {
         return nomeComprador;
     }
 
-    public void setNomeComprador(String nomeComprador) {
-        this.nomeComprador = nomeComprador;
-    }
-
     public String getProtocoloPedido() {
         return protocoloPedido;
-    }
-
-    public void setProtocoloPedido(String protocoloPedido) {
-        this.protocoloPedido = protocoloPedido;
     }
 
     public Double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(Double valorTotal) {
-        this.valorTotal = valorTotal;
+    public Double getValorProdutos() {
+        return valorProdutos;
+    }
+
+    public Double getValorCupom() {
+        return valorCupom;
+    }
+
+    public Double getValorFrete() {
+        return valorFrete;
     }
 }

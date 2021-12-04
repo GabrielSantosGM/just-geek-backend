@@ -81,11 +81,12 @@ public class ProductController extends Authenticated {
 
     @PostMapping("/move/{idUser}/{idFavorite}")
     public ResponseEntity<String> moveFavorite(@PathVariable int idUser,
-                                               @PathVariable int idFavorite) {
+                                               @PathVariable int idFavorite,
+                                               @PathVariable String tamanho) {
         if (authenticate(idUser)) {
             try {
                 LOG.info("[COMPRAS] Movendo produto para o carrinho");
-                buyProductServices.moverProdutoParaCarrinho(idUser, idFavorite);
+                buyProductServices.moverProdutoParaCarrinho(idUser, idFavorite, tamanho);
                 return ResponseEntity.status(HttpStatus.OK).build();
             } catch (ProdutoException e) {
                 LOG.warn(e.getMessage());
@@ -97,14 +98,15 @@ public class ProductController extends Authenticated {
         }
     }
 
-    @PostMapping("/comprar/{idUser}/{idProduct}/{quantidade}")
-    public ResponseEntity<String> buyProduct(@PathVariable int idUser,
-                                             @PathVariable int idProduct,
-                                             @PathVariable int quantidade) {
+    @PostMapping("/add-product/{idUser}/{idProduct}/{quantidade}/{tamanho}")
+    public ResponseEntity<String> addProductToCart(@PathVariable int idUser,
+                                                   @PathVariable int idProduct,
+                                                   @PathVariable int quantidade,
+                                                   @PathVariable String tamanho) {
         if (authenticate(idUser)) {
             try {
                 LOG.info("[COMPRAS] Adicionando produto de ID {} no carrinho", idProduct);
-                buyProductServices.adicionarProdutoNoCarrinho(idUser, idProduct, quantidade);
+                buyProductServices.adicionarProdutoNoCarrinho(idUser, idProduct, quantidade, tamanho);
                 return ResponseEntity.status(HttpStatus.OK).build();
             } catch (ProdutoException e) {
                 LOG.warn(e.getMessage());

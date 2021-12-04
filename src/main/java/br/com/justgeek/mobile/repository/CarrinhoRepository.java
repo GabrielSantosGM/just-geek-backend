@@ -13,6 +13,8 @@ public interface CarrinhoRepository extends JpaRepository<Carrinho, Integer> {
 
     Optional<Carrinho> findByFinalizadoFalseAndFkUsuarioIdUsuario(int idUsuario);
 
+    Optional<Carrinho> findByFkUsuarioIdUsuarioAndFkPedidoIdPedido(int idUsuario, int idPedido);
+
     @Query("select c from Usuario u inner join Carrinho c on u.idUsuario = c.fkUsuario where u.idUsuario like ?1")
     List<Carrinho> buscarPedidoPeloUsuario(int id);
 

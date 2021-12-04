@@ -5,6 +5,7 @@ import br.com.justgeek.mobile.dto.MercadoPagoPreferenceDTO;
 import br.com.justgeek.mobile.entities.Carrinho;
 import br.com.justgeek.mobile.entities.Pedido;
 import br.com.justgeek.mobile.entities.Usuario;
+import br.com.justgeek.mobile.enums.CupomDescontoEnum;
 import br.com.justgeek.mobile.exceptions.CarrinhoException;
 import br.com.justgeek.mobile.repository.CarrinhoRepository;
 import br.com.justgeek.mobile.repository.CupomDeDescontoRepository;
@@ -96,11 +97,14 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
         LOG.info("VERIFICANDO O CARRINHO");
         Carrinho carrinhoVerificado = verificarCarrinho(idUsuario);
 
+        Double valorProdutos = carrinhoVerificado.getValorTotal();
+        double descontoComCupom = 0.0;
+
         LOG.info("VERIFICANDO O CUPOM : [ {} ]", cupom.get());
         if (!cupom.get().isEmpty()) {
             LOG.info("EXECUTANDO OPERACAO DE CALCULO DA COMPRA COM O CUPOM [ {} ]", cupom.get());
-            Double porcentagemDesconto = ((carrinhoVerificado.getValorTotal() + valorFrete) * validaCupom(cupom.get())) / 100;
-            String valorFormatado = formatadorDecimal.format((carrinhoVerificado.getValorTotal() + valorFrete) - porcentagemDesconto).replace(",",".");
+            descontoComCupom = ((carrinhoVerificado.getValorTotal() + valorFrete) * validaCupom(cupom.get())) / 100;
+            String valorFormatado = formatadorDecimal.format((carrinhoVerificado.getValorTotal() + valorFrete) - descontoComCupom).replace(",",".");
             carrinhoVerificado.setValorTotal(Double.parseDouble(valorFormatado));
         } else{
             LOG.info("EXECUTANDO OPERACAO DE CALCULO DA COMPRA SEM O CUPOM");
@@ -111,7 +115,7 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
         LOG.info("INSERINDO TOKEN DE ACESSO");
         setarToken();
 
-        CompraDTO compraDTO = new CompraDTO(carrinhoVerificado);
+        CompraDTO compraDTO = new CompraDTO(carrinhoVerificado, valorProdutos, descontoComCupom, valorFrete);
         carrinhoVerificado.setFkPedido(gerarPedido(compraDTO, idUsuario));
         carrinhoRepository.save(carrinhoVerificado);
 
@@ -130,6 +134,9 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
         pedido.setCodCompra(compraDTO.getProtocoloPedido());
         pedido.setSituacao("Em faturamento");
         pedido.setDataHora(LocalDateTime.now());
+        pedido.setValorCupom(compraDTO.getValorCupom());
+        pedido.setValorFrete(compraDTO.getValorFrete());
+        pedido.setValorProdutos(compraDTO.getValorProdutos());
         pedido.setFkUsuario(verificarUsuario(idUsuario));
         return pedidoRepository.save(pedido);
     }

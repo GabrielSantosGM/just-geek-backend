@@ -36,20 +36,20 @@ public class ComprarProdutoServiceImpl implements ComprarProdutoService {
     }
 
     @Override
-    public void moverProdutoParaCarrinho(int idUsuario, int idFavorito) {
+    public void moverProdutoParaCarrinho(int idUsuario, int idFavorito, String tamanho) {
         Produto produtoFavorito = verificaItemFavoritado(idFavorito).getFkProduto();
-        this.adicionarProdutoNoCarrinho(idUsuario, produtoFavorito.getIdProduto(), 1);
+        this.adicionarProdutoNoCarrinho(idUsuario, produtoFavorito.getIdProduto(), 1, tamanho);
     }
 
     @Override
-    public void adicionarProdutoNoCarrinho(int idUsuario, int idProduto, int quantidade) {
+    public void adicionarProdutoNoCarrinho(int idUsuario, int idProduto, int quantidade, String tamanho) {
         LOG.info("Verificando carrinho.");
         Optional<Carrinho> carrinhoVerificado = carrinhoRepository.findByFinalizadoFalseAndFkUsuarioIdUsuario(idUsuario);
 
         LOG.info("Verificando o produto a ser adicionado.");
         Produto produtoAdicionado = verificaProduto(idProduto);
 
-        ItemCompra itemVerificado = verificaItemComprado(idUsuario, idProduto);
+        ItemCompra itemVerificado = verificaItemComprado(idUsuario, idProduto, tamanho);
 
         LOG.info("Recuperando dados do usuário logado.");
         Usuario usuarioLogado = verificaUsuario(idUsuario);
@@ -57,15 +57,16 @@ public class ComprarProdutoServiceImpl implements ComprarProdutoService {
         ItemCompra itemComprado = new ItemCompra();
 
         if (itemVerificado.getStatus()) {
-            adicionando(idUsuario, quantidade, carrinhoVerificado, produtoAdicionado, usuarioLogado, itemVerificado);
+            adicionando(idUsuario, quantidade, tamanho, carrinhoVerificado, produtoAdicionado, usuarioLogado, itemVerificado);
         } else {
-            adicionando(idUsuario, quantidade, carrinhoVerificado, produtoAdicionado, usuarioLogado, itemComprado);
+            adicionando(idUsuario, quantidade, tamanho, carrinhoVerificado, produtoAdicionado, usuarioLogado, itemComprado);
         }
 
     }
 
     private void adicionando(int idUsuario,
                              int quantidade,
+                             String tamanho,
                              Optional<Carrinho> carrinhoVerificado,
                              Produto produtoAdicionado,
                              Usuario usuarioLogado,
@@ -81,6 +82,7 @@ public class ComprarProdutoServiceImpl implements ComprarProdutoService {
             itemComprado.setFkCarrinho(carrinho);
             itemComprado.setQuantidade(itemComprado.getQuantidade() + quantidade);
         }
+        itemComprado.setTamanho(tamanho);
         itemComprado.setStatus(true);
         itemComprado.setFkProduto(produtoAdicionado);
         itemCompraRepository.save(itemComprado);
@@ -106,8 +108,8 @@ public class ComprarProdutoServiceImpl implements ComprarProdutoService {
         });
     }
 
-    private ItemCompra verificaItemComprado(int idUsuario, int idProduto) {
-        Optional<ItemCompra> itemCompra = itemCompraRepository.findByFkCarrinhoFkUsuarioIdUsuarioAndFkProdutoIdProdutoAndFkCarrinhoFinalizadoFalseAndStatusTrue(idUsuario, idProduto);
+    private ItemCompra verificaItemComprado(int idUsuario, int idProduto, String tamanho) {
+        Optional<ItemCompra> itemCompra = itemCompraRepository.findByTamanhoAndFkCarrinhoFkUsuarioIdUsuarioAndFkProdutoIdProdutoAndFkCarrinhoFinalizadoFalseAndStatusTrue(tamanho, idUsuario, idProduto);
         return itemCompra.orElseGet(ItemCompra::new);
     }
 

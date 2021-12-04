@@ -1,13 +1,9 @@
 package br.com.justgeek.mobile.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Table(name = "pedido")
@@ -29,6 +25,18 @@ public class Pedido {
     @NotNull
     @Column(name = "data_hora")
     private LocalDateTime dataHora;
+
+    @NotNull
+    @Column(name = "valor_produtos")
+    private Double valorProdutos;
+
+    @NotNull
+    @Column(name = "valor_frete")
+    private Double valorFrete;
+
+    @NotNull
+    @Column(name = "valor_cupom")
+    private Double valorCupom;
 
     @ManyToOne
     @JoinColumn(name = "fk_usuario_pedido")
@@ -64,6 +72,30 @@ public class Pedido {
 
     public void setDataHora(LocalDateTime dataHora) {
         this.dataHora = dataHora;
+    }
+
+    public Double getValorProdutos() {
+        return valorProdutos;
+    }
+
+    public void setValorProdutos(Double valorProdutos) {
+        this.valorProdutos = valorProdutos;
+    }
+
+    public Double getValorFrete() {
+        return valorFrete;
+    }
+
+    public void setValorFrete(Double valorFrete) {
+        this.valorFrete = valorFrete;
+    }
+
+    public Double getValorCupom() {
+        return valorCupom;
+    }
+
+    public void setValorCupom(Double valorCupom) {
+        this.valorCupom = valorCupom;
     }
 
     public Usuario getFkUsuario() {

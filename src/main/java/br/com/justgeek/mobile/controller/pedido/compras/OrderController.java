@@ -5,6 +5,7 @@ import br.com.justgeek.mobile.entities.Pedido;
 import br.com.justgeek.mobile.enums.respostas.requisicoes.RespostasRequisicoesUsuarioEnum;
 import br.com.justgeek.mobile.mapper.produto.ProdutoCarrinhoMapper;
 import br.com.justgeek.mobile.mapper.produto.ProdutoPedidoMapper;
+import br.com.justgeek.mobile.mapper.usuario.DetalhesPedidoMapper;
 import br.com.justgeek.mobile.repository.UsuarioRepository;
 import br.com.justgeek.mobile.service.PedidoComprasService;
 import org.slf4j.Logger;
@@ -39,6 +40,22 @@ public class OrderController extends Authenticated {
             try {
                 LOG.info("RETORNANDO TODOS OS PEDIDOS DO USUARIO DE ID {}", idUser);
                 return ResponseEntity.status(HttpStatus.OK).body(pedidoComprasService.retornaTodosOsPedidos(idUser));
+            } catch (NullPointerException e) {
+                LOG.warn(e.getMessage());
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+        } else {
+            LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @GetMapping("/specific/{idUser}/{idOrder}")
+    public ResponseEntity<DetalhesPedidoMapper> returnAllOrders(@PathVariable int idUser, @PathVariable int idOrder) {
+        if (authenticate(idUser)) {
+            try {
+                LOG.info("RETORNANDO INFORMACOES DO USUARIO DE ID {} E SEU PEDIDO DE ID {}", idUser, idOrder);
+                return ResponseEntity.status(HttpStatus.OK).body(pedidoComprasService.retornaDetalhesPedido(idUser, idOrder));
             } catch (NullPointerException e) {
                 LOG.warn(e.getMessage());
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

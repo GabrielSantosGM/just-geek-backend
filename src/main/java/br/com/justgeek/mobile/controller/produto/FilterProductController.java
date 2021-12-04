@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/filter")
@@ -23,6 +25,20 @@ public class FilterProductController {
     @Autowired
     public FilterProductController(ProdutoFiltroServiceImpl produtoService) {
         this.produtoService = produtoService;
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProdutoMapper>> searchProduct(@RequestParam Optional<String> search) {
+        try {
+            LOG.info("RECUPERANDO PRODUTOS PELA PESQUISA DO USUARIO");
+            return ResponseEntity.status(HttpStatus.OK).body(produtoService.retornarProdutosPesquisados(search));
+        } catch (NoSuchElementException e) {
+            LOG.warn(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (IllegalArgumentException e) {
+            LOG.warn(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @GetMapping("/product/{idProduct}")

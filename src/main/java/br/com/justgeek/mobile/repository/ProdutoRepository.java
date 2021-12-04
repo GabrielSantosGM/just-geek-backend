@@ -35,7 +35,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
     List<Produto> findByItensComprasFkCarrinhoFkUsuarioIdUsuarioAndItensComprasFkCarrinhoFkPedidoIdPedido(int idUsuario, int idPedido);
 
     @Query("select p from Usuario u inner join Pedido p on u.idUsuario = p.fkUsuario inner join Carrinho c on " +
-           "c.fkPedido = p.idPedido inner join ItemCompra it on it.fkCarrinho = c.idCarrinho inner join Produto pr on " +
+            "c.fkPedido = p.idPedido inner join ItemCompra it on it.fkCarrinho = c.idCarrinho inner join Produto pr on " +
             " it.fkProduto = pr.idProduto where u.idUsuario like ?1 and it.status = true and c.finalizado = false")
     List<Produto> returnsProductsInCart(int idUsuario);
 
@@ -43,13 +43,5 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
             "on c.idCarrinho = i.fkCarrinho inner join Produto x on i.fkProduto = x.idProduto " +
             "where u.idUsuario like ?1 and i.status = true and c.finalizado = 0")
     List<Produto> searchForProductsInCart(int idUser);
-
-    @Query("select p from Produto p inner join Roupa c on p.fkRoupa = c.idRoupa " +
-            "where (:tema is null or p.tema like %:tema%)" +
-            "or (:personagem is null or p.personagem like %:personagem%)" +
-            "or (:peca is null or c.modelo like %:peca%)")
-    List<Produto> searchProduct(@Param("tema") Optional<String> tema,
-                                @Param("personagem") Optional<String> personagem,
-                                @Param("peca") Optional<String> peca);
 
 }

@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoFiltroServiceImpl implements ProdutoFiltroService {
@@ -24,6 +26,22 @@ public class ProdutoFiltroServiceImpl implements ProdutoFiltroService {
     @Autowired
     public ProdutoFiltroServiceImpl(ProdutoRepository productRepository, ImagemProdutoServiceImpl imagemProdutoService) {
         this.produtoRepository = productRepository;
+    }
+
+    @Override
+    public List<ProdutoMapper> retornarProdutosPesquisados(Optional<String> pesquisa) {
+        List<ProdutoMapper> produtos = EntidadeParaMapperListaUtils.listaProdutos(produtoRepository.findAll());
+        if (pesquisa.get().trim().isEmpty()) {
+            throw new IllegalArgumentException("ERRO AO PESQUISAR POR [ " + pesquisa.get() + " ].");
+        } else {
+            List<ProdutoMapper> produtosRetornados = produtos.stream()
+                    .filter(produto -> produto.getNomeProduto().contains(pesquisa.get()))
+                    .collect(Collectors.toList());
+            if (produtosRetornados.isEmpty()) {
+                throw new NoSuchElementException("NENHUM PRODUTO ENCONTRADO!");
+            }
+            return produtosRetornados;
+        }
     }
 
     @Override
