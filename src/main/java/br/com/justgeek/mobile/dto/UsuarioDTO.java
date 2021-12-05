@@ -24,7 +24,7 @@ public class UsuarioDTO {
 
     public Usuario dtoParaEntidade() {
         if (EmailValidator.getInstance().isValid(email)) {
-            return new Usuario(email, sobrenome, dataNascimento, cpf, celular, email, senha);
+            return new Usuario(nome, sobrenome, dataNascimento, cpf, celular, email, senha);
         } else {
             throw new ContaException("[CADASTRO] Email inserido inválido!");
         }

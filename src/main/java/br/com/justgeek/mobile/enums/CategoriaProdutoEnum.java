@@ -4,7 +4,9 @@ public enum CategoriaProdutoEnum {
 
     ANIME("ANIME"),
     CARTOON("CARTOON"),
-    FILME("FILME");
+    FILME("FILME"),
+    ANIMACAO("ANIMACAO"),
+    GAMER("GAMER");
 
     private final String categoria;
 

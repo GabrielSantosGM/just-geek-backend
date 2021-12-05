@@ -9,5 +9,6 @@ public interface ImagemProdutoService {
     List<String> uploadImagemProduto(int idProduto,
                                      String imagem1,
                                      String imagem2,
-                                     String imagem3);
+                                     String imagem3,
+                                     String imagem4);
 }

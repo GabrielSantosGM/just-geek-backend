@@ -44,13 +44,14 @@ public class ImagemProdutoServiceImpl implements ImagemProdutoService {
     public List<String> uploadImagemProduto(int idProduto,
                                             String imagem1,
                                             String imagem2,
-                                            String imagem3) {
+                                            String imagem3,
+                                            String imagem4) {
         Optional<Produto> produto = produtoRepository.findByIdProduto(idProduto);
 
         if (produto.isPresent()) {
             try {
                 LOG.info("Salvando imagens...");
-                return uploadImagem(imagem1, imagem2, imagem3, produto);
+                return uploadImagem(imagem1, imagem2, imagem3, imagem4, produto);
             } catch (Exception e) {
                 throw new ImagemException(e.getMessage());
             }
@@ -62,11 +63,13 @@ public class ImagemProdutoServiceImpl implements ImagemProdutoService {
     private List<String> uploadImagem(String imagem1,
                                       String imagem2,
                                       String imagem3,
+                                      String imagem4,
                                       Optional<Produto> produto) {
         List<String> imagens = new ArrayList<>();
         imagens.add(imagem1);
         imagens.add(imagem2);
         imagens.add(imagem3);
+        imagens.add(imagem4);
 
         for (int i = 0; i < imagens.size(); i++) {
             if (imagens.get(i) != null) {

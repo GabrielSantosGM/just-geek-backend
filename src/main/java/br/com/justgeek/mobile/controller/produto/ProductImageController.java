@@ -26,11 +26,12 @@ public class ProductImageController {
 
     @PostMapping("/{idProduct}")
     public ResponseEntity<List<String>> uploadImagemProduto(@PathVariable int idProduct,
-                                                                   @RequestParam String imagem1,
-                                                                   @RequestParam String imagem2,
-                                                                   @RequestParam String imagem3) {
+                                                            @RequestParam String imagem1,
+                                                            @RequestParam String imagem2,
+                                                            @RequestParam String imagem3,
+                                                            @RequestParam String imagem4) {
         try {
-            imagemProdutoService.uploadImagemProduto(idProduct, imagem1, imagem2, imagem3);
+            imagemProdutoService.uploadImagemProduto(idProduct, imagem1, imagem2, imagem3, imagem4);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (ImagemException e) {
             LOG.error(e.getMessage());

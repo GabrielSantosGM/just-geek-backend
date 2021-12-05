@@ -64,7 +64,7 @@ public class ProdutoFiltroServiceImpl implements ProdutoFiltroService {
 
     @Override
     public List<ProdutoMapper> retornarProdutosEmPromocao() {
-        List<Produto> produtos = produtoRepository.findByPrecoLessThan(50.00);
+        List<Produto> produtos = produtoRepository.findByPrecoLessThan(42.99);
         if (produtos.isEmpty()) {
             throw new ProdutoException("[FiltroProdutos] Nenhum produto em promocao recuperado.");
         } else {
