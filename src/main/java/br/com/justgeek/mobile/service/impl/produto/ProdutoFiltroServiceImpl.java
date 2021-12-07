@@ -95,7 +95,7 @@ public class ProdutoFiltroServiceImpl implements ProdutoFiltroService {
 
     @Override
     public List<ProdutoMapper> retornarProdutosTema(String tema) {
-        List<Produto> produtos = produtoRepository.findByTemaIgnoreCaseContains(TemaProdutoEnum.valueFrom(tema).getTema());
+        List<Produto> produtos = produtoRepository.findByTemaIgnoreCaseContains(tema);
         if (produtos.isEmpty()) {
             throw new ProdutoException("[FiltroProdutos] Não foram encontrados produtos com o tema " + tema + ".");
         } else {
