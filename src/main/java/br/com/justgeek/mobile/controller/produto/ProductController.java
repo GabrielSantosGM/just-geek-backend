@@ -62,16 +62,16 @@ public class ProductController extends Authenticated {
     }
 
     @PostMapping("/{idUser}/{idProduct}")
-    public ResponseEntity<String> favoriteProduct(@PathVariable int idUser,
+    public ResponseEntity<Boolean> favoriteProduct(@PathVariable int idUser,
                                                   @PathVariable int idProduct) {
         if (authenticate(idUser)) {
             try {
                 LOG.info("[FAVORITO] Favoritando produto de ID {}", idProduct);
                 favoriteProductServices.favoritarProduto(idUser, idProduct);
-                return ResponseEntity.status(HttpStatus.CREATED).build();
+                return ResponseEntity.status(HttpStatus.CREATED).body(true);
             } catch (ProdutoException e) {
                 LOG.warn(e.getMessage());
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
             }
         } else {
             LOG.warn(RespostasRequisicoesUsuarioEnum.MENSAGEM_UNAUTHORIZED.getResposta(), idUser);
