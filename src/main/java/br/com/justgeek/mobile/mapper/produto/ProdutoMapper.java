@@ -10,6 +10,7 @@ public class ProdutoMapper {
 
     private final Integer idProduto;
     private final String nomeProduto;
+    private final String categoria;
     private final Double preco;
     private final String especificacoes;
     private final String descricao;
@@ -20,6 +21,7 @@ public class ProdutoMapper {
         this.nomeProduto = produto.getFkRoupa().getModelo() + " " +
                 produto.getTema() + " - " +
                 produto.getPersonagem();
+        this.categoria = produto.getCategoria();
         this.preco = produto.getPreco();
         this.especificacoes = produto.getFkRoupa().getEspecificacoes();
         this.descricao = produto.getDescricao();
@@ -36,6 +38,10 @@ public class ProdutoMapper {
 
     public String getNomeProduto() {
         return nomeProduto;
+    }
+
+    public String getCategoria() {
+        return categoria;
     }
 
     public Double getPreco() {

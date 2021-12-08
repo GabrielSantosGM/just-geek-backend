@@ -24,7 +24,7 @@ public class ArtistaMapper {
 
     private ArtistaMapper(Artista artista) {
         this.idArtista = artista.getIdArtista();
-        this.imagemPerfil = "/artist-image/perfil/" + idArtista;
+        this.imagemPerfil = artista.getImagem().getImagem();
         this.nome = artista.getNomeCompleto();
         this.apelido = artista.getApelido();
         this.biografia = artista.getBiografia();
